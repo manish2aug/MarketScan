@@ -97,7 +97,7 @@ create table market_scan.subcategory (
 
 create table market_scan.item (
 	id bigserial primary key not null,
-	name_english varchar(100) not null,
+	name_english varchar(150) not null,
 	name_hindi varchar(100) not null,
 	unit varchar(50) not null,
 	subcategory integer not null references market_scan.subcategory(id),
@@ -161,10 +161,3 @@ create table market_scan.search_history (
 	item_opened boolean not null,
 	search_date timestamp not null
 );
-
-
-
-
-
-	
-    

@@ -8,5 +8,5 @@ import in.co.trish.marketscan.persistence.entities.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
-	List<Item> findByNameEnglishContaining(String searchString);
+	List<Item> findByNameEnglishIgnoreCaseContaining(String searchString);
 }

@@ -183,6 +183,13 @@
 			<version>1.0</version>
 		</dependency>
 
+		<!-- Spring hateoas -->
+		<dependency>
+			<groupId>org.springframework.hateoas</groupId>
+			<artifactId>spring-hateoas</artifactId>
+			<version>0.19.0.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<!-- http://mvnrepository.com/artifact/org.springframework/spring-framework-bom -->

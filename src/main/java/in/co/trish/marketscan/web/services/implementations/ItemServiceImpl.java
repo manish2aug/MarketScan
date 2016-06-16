@@ -27,7 +27,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> findAll(String searchString) {
-		return itemRepository.findByNameEnglishContaining(searchString);
+		return itemRepository.findByNameEnglishIgnoreCaseContaining(searchString);
 	}
 	
 }
