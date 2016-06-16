@@ -1,17 +1,22 @@
 package in.co.trish.marketscan.persistence.entities;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "SUBCATEGORY", schema = "market_scan")
+@Table(name = "subcategory", schema = "market_scan")
 public class SubCategory {
 
 	@Id
@@ -21,23 +26,29 @@ public class SubCategory {
 	@Column(name = "name_english", nullable = false, length = 100)
 	private String nameEnglish;
 
-	@JsonIgnore
 	@Column(name = "name_hindi", nullable = false, length = 100)
 	private String nameHindi;
 	
-	@JoinColumn(name = "name_english", nullable = false, table="category")
+	@Column(name = "category")
 	private String category;
+	
+	private String code;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "subCategory", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private Set<Item> items = new LinkedHashSet<Item>();
 
 	public SubCategory(){
 		
 	}
 	
-	public SubCategory(int id, String nameEnglish, String nameHindi, String category) {
+	public SubCategory(int id, String nameEnglish, String nameHindi, String category, String code) {
 		super();
 		this.id = id;
 		this.nameEnglish = nameEnglish;
 		this.nameHindi = nameHindi;
 		this.category = category;
+		this.code = code;
 	}
 
 	/* (non-Javadoc)
@@ -107,4 +118,21 @@ public class SubCategory {
 		this.category = category;
 	}
 
+	public Set<Item> getItems() {
+		return items;
+	}
+
+	
+	public void setItems(Set<Item> items) {
+		this.items = items;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	
+	public void setCode(String code) {
+		this.code = code;
+	}
 }

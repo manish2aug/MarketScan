@@ -6,11 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "ITEM", schema = "MARKET_SCAN")
@@ -24,26 +25,25 @@ public class Item {
 	@Column(name = "name_english", nullable = false, length = 100)
 	private String nameEnglish;
 
-	@JsonIgnore
 	@Column(name = "name_hindi", nullable = false, length = 100)
 	private String nameHindi;
 
-	@JsonIgnore
 	@Column(name = "unit", nullable = false, length = 50)
 	private String unit;
 
-	@JoinColumn(name="name_english", table="MARKET_SCAN.subcategory")
-	private String subCategory;
-
-	@JsonIgnore
 	@Column(name = "brand", nullable = false)
 	private int brand;
+
+	@ManyToOne
+    @JoinColumn(name = "subcategory")
+	@JsonBackReference
+	private SubCategory subCategory;
 	
 	public Item(){
 		
 	}
 	
-	public Item(int id, String nameEnglish, String nameHindi, String unit, String subCategory, int brand) {
+	public Item(int id, String nameEnglish, String nameHindi, String unit, SubCategory subCategory, int brand) {
 		this.id = id;
 		this.nameEnglish = nameEnglish;
 		this.nameHindi = nameHindi;
@@ -129,7 +129,7 @@ public class Item {
 	/**
 	 * @return the subCategory
 	 */
-	public String getSubCategory() {
+	public SubCategory getSubCategory() {
 		return subCategory;
 	}
 
@@ -137,7 +137,7 @@ public class Item {
 	 * @param subCategory
 	 *            the subCategory to set
 	 */
-	public void setSubCategory(String subCategory) {
+	public void setSubCategory(SubCategory subCategory) {
 		this.subCategory = subCategory;
 	}
 
