@@ -1,3 +1,24 @@
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------- DROP TABLES
+--drop table market_scan.deal_history;
+--drop table market_scan.search_history;
+--drop table market_scan.user_deal_account;
+--drop table market_scan.deal;
+--drop table market_scan.review;
+--drop table market_scan.user;
+--drop table market_scan.role;
+--drop table market_scan.item;
+--drop table market_scan.subcategory;
+--drop table market_scan.category;
+--drop table market_scan.contact_detail;
+--drop table market_scan.city;
+--drop table market_scan.state;
+--drop table market_scan.deal_package;
+--drop table market_scan.brand;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 create table market_scan.deal_history (
 	id bigserial primary key not null,
 	item_name varchar(200) not null, 
@@ -14,7 +35,8 @@ create table market_scan.deal_history (
 create table market_scan.brand (
 	id serial primary key not null,
 	name_english varchar(100) not null,
-	name_hindi varchar(100) not null
+	name_hindi varchar(100) not null,
+	code varchar(50) not null UNIQUE
 );
 
 create table market_scan.deal_package (
@@ -29,14 +51,16 @@ create table market_scan.deal_package (
 create table market_scan.state (
 	id serial primary key not null,
 	name_english varchar(100) not null,
-	name_hindi varchar(100) not null
+	name_hindi varchar(100) not null,
+	code varchar(50) not null UNIQUE
 );
 
 create table market_scan.city (
 	id serial primary key not null,
 	name_english varchar(100) not null,
 	name_hindi varchar(100) not null,
-	state serial not null references market_scan.state(id) 
+	state serial not null references market_scan.state(id),
+	code varchar(50) not null UNIQUE
 );
 
 create table market_scan.contact_detail (
@@ -59,14 +83,16 @@ create table market_scan.contact_detail (
 create table market_scan.category (
 	id serial primary key not null,
 	name_english varchar(100) not null,
-	name_hindi varchar(100) not null
+	name_hindi varchar(100) not null,
+	code varchar(50) not null UNIQUE
 );
 
 create table market_scan.subcategory (
 	id serial primary key not null,
 	name_english varchar(100) not null,
 	name_hindi varchar(100) not null,
-	category serial not null references market_scan.category(id)
+	category serial not null references market_scan.category(id),
+	code varchar(50) not null UNIQUE
 );
 
 create table market_scan.item (
@@ -80,8 +106,9 @@ create table market_scan.item (
 
 CREATE TABLE market_scan.role (
   id serial primary key not null,
-  name character varying(100) NOT NULL
-)
+  name character varying(100) NOT NULL,
+  code varchar(50) not null UNIQUE
+);
 
 create table market_scan.user (
 	id bigserial primary key not null,
