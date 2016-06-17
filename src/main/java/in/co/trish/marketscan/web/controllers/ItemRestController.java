@@ -1,9 +1,5 @@
 package in.co.trish.marketscan.web.controllers;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +12,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.co.trish.marketscan.persistence.entities.Item;
+import in.co.trish.marketscan.web.representation.assembler.ItemResourceAssembler;
 import in.co.trish.marketscan.web.representation.read.ItemReadRepresentation;
 import in.co.trish.marketscan.web.services.ItemService;
 
 @RequestMapping(value = "/V1/{city}/items")
 @RestController
 public class ItemRestController {
-
+	
 	@Autowired
 	ItemService itemService;
-
+	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<List<ItemReadRepresentation>> getItems(@RequestParam("searchString") String searchString,
-			@PathVariable("city") String city) {
-
+	public ResponseEntity<List<ItemReadRepresentation>> getItems(@RequestParam("searchString") String searchString, @PathVariable("city") String city) {
+		
 		List<Item> items = itemService.findAll(searchString);
-		List<ItemReadRepresentation> representations = new ArrayList<>();
-
 		if (items.isEmpty()) {
 			return new ResponseEntity<List<ItemReadRepresentation>>(HttpStatus.NO_CONTENT);
 		}
-
-		for (Item item : items) {
-			ItemReadRepresentation representation = new ItemReadRepresentation(item);
-			representation.add(linkTo(methodOn(ItemRestController.class).getItems(searchString, city)).withSelfRel());
-			representations.add(representation);
-		}
+		
+		ItemResourceAssembler assembler = new ItemResourceAssembler(city); 
+		List<ItemReadRepresentation> resourceList = assembler.toResources(items);
+		
 		System.out.println("subcategory: " + items.get(0).getSubCategory().getNameEnglish());
-		return new ResponseEntity<List<ItemReadRepresentation>>(representations, HttpStatus.OK);
+		return new ResponseEntity<List<ItemReadRepresentation>>(resourceList, HttpStatus.OK);
 	}
-
+	
 }
