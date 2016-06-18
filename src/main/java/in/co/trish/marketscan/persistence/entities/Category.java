@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "CATEGORY", schema = "market_scan")
+@Table(name = "CATEGORY", schema = "MARKET_SCAN")
 public class Category {
 
 	@Id

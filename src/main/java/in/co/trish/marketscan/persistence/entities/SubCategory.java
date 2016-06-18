@@ -10,10 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "subcategory", schema = "market_scan")
@@ -22,6 +22,7 @@ public class SubCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	private String code;
 
 	@Column(name = "name_english", nullable = false, length = 100)
 	private String nameEnglish;
@@ -29,20 +30,20 @@ public class SubCategory {
 	@Column(name = "name_hindi", nullable = false, length = 100)
 	private String nameHindi;
 	
-	@Column(name = "category")
-	private String category;
-	
-	private String code;
+	@ManyToOne
+    @JoinColumn(name = "category")
+	private Category category;
+	 
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "subCategory", cascade = CascadeType.ALL)
-	@JsonManagedReference
+//	@JsonManagedReference
 	private Set<Item> items = new LinkedHashSet<Item>();
 
 	public SubCategory(){
 		
 	}
 	
-	public SubCategory(int id, String nameEnglish, String nameHindi, String category, String code) {
+	public SubCategory(int id, String nameEnglish, String nameHindi, Category category, String code) {
 		super();
 		this.id = id;
 		this.nameEnglish = nameEnglish;
@@ -107,14 +108,14 @@ public class SubCategory {
 	/**
 	 * @return the category
 	 */
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
 	/**
 	 * @param category the category to set
 	 */
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

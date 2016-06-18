@@ -10,11 +10,11 @@ import in.co.trish.marketscan.web.controllers.ItemRestController;
 import in.co.trish.marketscan.web.representation.read.ItemReadResource;
 
 @Component
-public class ItemResourceAssembler extends ResourceAssemblerSupport<Item, ItemReadResource> {
+public class MarketComparisonResourceAssembler extends ResourceAssemblerSupport<Item, ItemReadResource> {
 
 	private Object[] pathParameters;
 
-	public ItemResourceAssembler() {
+	public MarketComparisonResourceAssembler() {
 		super(ItemRestController.class, ItemReadResource.class);
 	}
 

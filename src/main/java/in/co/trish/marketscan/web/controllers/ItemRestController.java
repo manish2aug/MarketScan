@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import in.co.trish.marketscan.persistence.entities.Item;
 import in.co.trish.marketscan.web.representation.assembler.ItemResourceAssembler;
-import in.co.trish.marketscan.web.representation.read.ItemReadRepresentation;
+import in.co.trish.marketscan.web.representation.read.ItemReadResource;
 import in.co.trish.marketscan.web.services.ItemService;
 
 @RequestMapping(value = "/V1/{city}/items")
@@ -23,19 +23,21 @@ public class ItemRestController {
 	@Autowired
 	ItemService itemService;
 	
+	@Autowired
+	ItemResourceAssembler assembler;
+	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<List<ItemReadRepresentation>> getItems(@RequestParam("searchString") String searchString, @PathVariable("city") String city) {
+	public ResponseEntity<List<ItemReadResource>> getItems(@RequestParam("searchString") String searchString, @PathVariable("city") String city) {
 		
 		List<Item> items = itemService.findAll(searchString);
 		if (items.isEmpty()) {
-			return new ResponseEntity<List<ItemReadRepresentation>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<ItemReadResource>>(HttpStatus.NO_CONTENT);
 		}
+
+		assembler.setPathParameters(new Object[]{city});
+		List<ItemReadResource> resourceList = assembler.toResources(items);
 		
-		ItemResourceAssembler assembler = new ItemResourceAssembler(city); 
-		List<ItemReadRepresentation> resourceList = assembler.toResources(items);
-		
-		System.out.println("subcategory: " + items.get(0).getSubCategory().getNameEnglish());
-		return new ResponseEntity<List<ItemReadRepresentation>>(resourceList, HttpStatus.OK);
+		return new ResponseEntity<List<ItemReadResource>>(resourceList, HttpStatus.OK);
 	}
 	
 }

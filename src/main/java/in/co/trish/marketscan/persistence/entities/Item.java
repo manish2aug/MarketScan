@@ -36,7 +36,7 @@ public class Item {
 
 	@ManyToOne
     @JoinColumn(name = "subcategory")
-	@JsonBackReference
+//	@JsonBackReference
 	private SubCategory subCategory;
 	
 	public Item(){

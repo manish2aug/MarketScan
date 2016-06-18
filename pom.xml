@@ -187,7 +187,14 @@
 		<dependency>
 			<groupId>org.springframework.hateoas</groupId>
 			<artifactId>spring-hateoas</artifactId>
-			<version>0.19.0.RELEASE</version>
+			<version>0.20.0.RELEASE</version>
+		</dependency>
+		
+		<!-- Java money api -->
+		<dependency>
+			<groupId>javax.money</groupId>
+			<artifactId>money-api</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 
 	</dependencies>
