@@ -10,5 +10,5 @@ create database marketScan
        
 -- drop schema bazaar_bargain;
 
-create schema market_scan
-  authorization postgres;
+CREATE SCHEMA MARKET_SCAN
+  AUTHORIZATION POSTGRES;
