@@ -1,163 +1,165 @@
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------- DROP TABLES
---drop table market_scan.deal_history;
---drop table market_scan.search_history;
---drop table market_scan.user_deal_account;
---drop table market_scan.deal;
---drop table market_scan.review;
---drop table market_scan.user;
---drop table market_scan.role;
---drop table market_scan.item;
---drop table market_scan.subcategory;
---drop table market_scan.category;
---drop table market_scan.contact_detail;
---drop table market_scan.city;
---drop table market_scan.state;
---drop table market_scan.deal_package;
---drop table market_scan.brand;
+--DROP TABLE MARKET_SCAN.DEAL_HISTORY;
+--DROP TABLE MARKET_SCAN.SEARCH_HISTORY;
+--DROP TABLE MARKET_SCAN.USER_DEAL_ACCOUNT;
+--DROP TABLE MARKET_SCAN.DEAL;
+--DROP TABLE MARKET_SCAN.REVIEW;
+--DROP TABLE MARKET_SCAN.USER;
+--DROP TABLE MARKET_SCAN.ROLE;
+--DROP TABLE MARKET_SCAN.ITEM;
+--DROP TABLE MARKET_SCAN.SUBCATEGORY;
+--DROP TABLE MARKET_SCAN.CATEGORY;
+--DROP TABLE MARKET_SCAN.CONTACT_DETAIL;
+--DROP TABLE MARKET_SCAN.CITY;
+--DROP TABLE MARKET_SCAN.STATE;
+--DROP TABLE MARKET_SCAN.DEAL_PACKAGE;
+--DROP TABLE MARKET_SCAN.BRAND;
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-
-create table market_scan.deal_history (
-	id bigserial primary key not null,
-	item_name varchar(200) not null, 
-	brand varchar(100) not null,
-	seller_short_description varchar(200) not null,
-	deal_expired_on date not null,
-	deal_search_count integer not null,
-	deal_viewed_count integer not null,
-	normal_price decimal(12,2) not null,
-	deal_price decimal(12,2) not null,
-	item_expiry date null
+CREATE TABLE MARKET_SCAN.STATE (
+	ID SERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(100) NOT NULL,
+	CODE VARCHAR(50) NOT NULL UNIQUE
 );
 
-create table market_scan.brand (
-	id serial primary key not null,
-	name_english varchar(100) not null,
-	name_hindi varchar(100) not null,
-	code varchar(50) not null UNIQUE
+CREATE TABLE MARKET_SCAN.CITY (
+	ID SERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(100) NOT NULL,
+	STATE_ID INTEGER NOT NULL REFERENCES MARKET_SCAN.STATE(ID),
+	CODE VARCHAR(50) NOT NULL UNIQUE
 );
 
-create table market_scan.deal_package (
-	id smallserial primary key not null,
-	name varchar(50) not null,
-	package_code char(10) not null,
-	total_deals integer, 
-	package_validity integer, 
-	deal_validity integer
+CREATE TABLE MARKET_SCAN.BRAND (
+	ID SERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(100) NOT NULL,
+	CODE VARCHAR(50) NOT NULL UNIQUE
 );
 
-create table market_scan.state (
-	id serial primary key not null,
-	name_english varchar(100) not null,
-	name_hindi varchar(100) not null,
-	code varchar(50) not null UNIQUE
+CREATE TABLE MARKET_SCAN.PRODUCT_CATEGORY (
+	ID SERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(100) NOT NULL,
+	CODE VARCHAR(50) NOT NULL UNIQUE
 );
 
-create table market_scan.city (
-	id serial primary key not null,
-	name_english varchar(100) not null,
-	name_hindi varchar(100) not null,
-	state serial not null references market_scan.state(id),
-	code varchar(50) not null UNIQUE
+CREATE TABLE MARKET_SCAN.PRODUCT_SUBCATEGORY (
+	ID SERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(100) NOT NULL,
+	PRODUCT_CATEGORY_ID INTEGER NOT NULL REFERENCES MARKET_SCAN.PRODUCT_CATEGORY(ID),
+	CODE VARCHAR(50) NOT NULL UNIQUE
 );
 
-create table market_scan.contact_detail (
-	id bigserial primary key not null,
-	shop_name_english varchar(100) null,
-	shop_name_hindi varchar(100) null,
-	mobile varchar(10) null,
-	landline varchar(20) null,
-	whatsapp varchar(10) null,
-	email varchar(150) not null,
-	address_line1 varchar(150) not null,
-	addressline2 varchar(150) not null,
-	landmark varchar(150) null,
-	town_or_locality varchar(100) null,
-	city serial not null references market_scan.city(id),
-	longitude varchar(1000) not null,
-	lattitude varchar(100) not null
+CREATE TABLE MARKET_SCAN.PRODUCT (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(150) NOT NULL,
+	UNIT VARCHAR(50) NOT NULL,
+	PRODUCT_SUBCATEGORY_ID INTEGER NOT NULL REFERENCES MARKET_SCAN.PRODUCT_CATEGORY(ID)
 );
 
-create table market_scan.category (
-	id serial primary key not null,
-	name_english varchar(100) not null,
-	name_hindi varchar(100) not null,
-	code varchar(50) not null UNIQUE
+CREATE TABLE MARKET_SCAN.BRAND_PRODUCT (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	PRODUCT_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.PRODUCT(ID),
+	BRAND_ID INTEGER NOT NULL REFERENCES MARKET_SCAN.BRAND(ID)
 );
 
-create table market_scan.subcategory (
-	id serial primary key not null,
-	name_english varchar(100) not null,
-	name_hindi varchar(100) not null,
-	category serial not null references market_scan.category(id),
-	code varchar(50) not null UNIQUE
+CREATE TABLE MARKET_SCAN.CITY_BRAND_PRODUCT (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	BRAND_PRODUCT_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.BRAND_PRODUCT(ID),
+	CITY_ID INTEGER NOT NULL REFERENCES MARKET_SCAN.CITY(ID)
 );
 
-create table market_scan.item (
-	id bigserial primary key not null,
-	name_english varchar(150) not null,
-	name_hindi varchar(100) not null,
-	unit varchar(50) not null,
-	subcategory integer not null references market_scan.subcategory(id),
-	brand integer not null references market_scan.brand(id)
+CREATE TABLE MARKET_SCAN.DEAL_PACKAGE (
+	ID SMALLSERIAL PRIMARY KEY NOT NULL,
+	NAME VARCHAR(50) NOT NULL,
+	CODE CHAR(10) NOT NULL,
+	DEAL_COUNT INTEGER, 
+	VALIDITY INTEGER, 
+	DEAL_VALIDITY INTEGER
 );
 
-CREATE TABLE market_scan.role (
-  id serial primary key not null,
-  name character varying(100) NOT NULL,
-  code varchar(50) not null UNIQUE
+CREATE TABLE MARKET_SCAN.DEAL_ACCOUNT (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	DEAL_PACKAGE_ID SMALLSERIAL NOT NULL REFERENCES MARKET_SCAN.DEAL_PACKAGE(ID),
+	PURCHASE_DATE DATE NOT NULL,
+	AVAILABLE_DEAL_BALANCE SMALLINT NOT NULL,
 );
 
-create table market_scan.user (
-	id bigserial primary key not null,
-	name_english varchar(100) not null,
-	name_hindi varchar(100) not null,
-	nick_name varchar(50) null,
-	is_active boolean not null,
-	role integer not null references market_scan.role(id),
-	is_delivery_available boolean null,
-	universally_unique_identifiers varchar(100) null,
-	device_id varchar(50) null,
-	mac_address macaddr null,
-	ip_address inet null,
-	registration_date date DEFAULT now(),
-	contact_detail bigint not null references market_scan.contact_detail(id) 
+CREATE TABLE MARKET_SCAN.ROLE (
+  ID SERIAL PRIMARY KEY NOT NULL,
+  NAME CHARACTER VARYING(10) NOT NULL,
+  CODE CHAR(1) NOT NULL UNIQUE
 );
 
-create table market_scan.review (
-	id bigserial primary key not null,
-	seller bigserial not null references market_scan.user(id),
-	reviewer bigserial not null references market_scan.user(id),
-	is_recommended boolean not null default true,
-	comment varchar(500) null
+CREATE TABLE MARKET_SCAN.PERSON (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	FULL_NAME VARCHAR(100) NOT NULL,
+	USER_NAME VARCHAR(20) NULL,
+	PASSWORD VARCHAR(20) NULL,
+  	UUID VARCHAR(50) NULL,
+  	MAC_ADDRESS MACADDR NULL,
+    IP_ADDRESS INET NULL,
+    DEVICE_ID VARCHAR(50) NULL,
+    SHOP_NAME VARCHAR(100) NULL,
+	MOBILE VARCHAR(10) NULL,
+	LANDLINE VARCHAR(20) NULL,
+	WHATSAPP VARCHAR(10) NULL,
+	EMAIL VARCHAR(150) NOT NULL,
+	ADDRESS_LINE1 VARCHAR(150) NOT NULL,
+	ADDRESSLINE2 VARCHAR(150) NOT NULL,
+	LANDMARK VARCHAR(150) NULL,
+	TOWN VARCHAR(100) NULL,
+	LOCALITY VARCHAR(100) NULL,
+	LONGITUDE VARCHAR(1000) NOT NULL,
+	LATTITUDE VARCHAR(100) NOT NULL,   
+    LAST_LOGIN_DATE INTEGER UNSIGNED NULL,
+    LAST_ACTIVITY INTEGER UNSIGNED NULL,
+	IS_DELIVERY_AVAILABLE BOOLEAN NULL,
+	REGISTRATION_DATE DATE DEFAULT NOW(),
+	ROLE_ID SMALLINT NOT NULL REFERENCES MARKET_SCAN.ROLE(ID),
+	CITY_ID INTEGER NOT NULL REFERENCES MARKET_SCAN.CITY(ID)
+	DEAL_ACCOUNT__ID INTEGER NOT NULL REFERENCES MARKET_SCAN.DEAL_ACCOUNT(ID)
 );
 
-create table market_scan.deal (
-	id serial primary key not null,
-	item bigserial not null references market_scan.item(id),
-	seller bigserial not null references market_scan.user(id),
-	deal_published_date date not null,
-	deal_expiry_date date not null,
-	brand serial not null references market_scan.brand(id),
-	normal_price decimal(12,2) not null,
-	deal_price decimal(12,2) not null,
-	item_expiry date null
+CREATE TABLE MARKET_SCAN.SELLER_REVIEW (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	RESPECTFUL BOOLEAN NOT NULL,
+	WAS_QUALITY_OK BOOLEAN NOT NULL,
+	WAS_QUANTITY_OK BOOLEAN NOT NULL,
+	IS_RECOMMENDED BOOLEAN NOT NULL DEFAULT TRUE,
+	OVERALL_RATING SMALLINT NOT NULL,
+	COMMENT VARCHAR(500) NULL,
+	SELLER_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.PERSON(ID),
+	REVIEWER_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.PERSON(ID)
 );
 
-create table market_scan.user_deal_account (
-	id serial primary key not null,
-	deal_package smallserial not null references market_scan.deal_package(id),
-	purchase_date date not null,
-	available_deal_balance smallint not null,
-	user_id bigserial not null references market_scan.user(id) 
+-- A JOB WOULD REMOVE ITEMS FROM THIS TABLE ON A REGULAR PERIOD SUBJECT TO DEAL LIFE SPAN, 
+-- WHEN A DEAL WILL BE REMOVED IT WILL BE LOGGED FOR AUDIT
+CREATE TABLE MARKET_SCAN.OFFERS (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	SELLER_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.PERSON(ID),
+	CITY_BRAND_PRODUCT_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.CITY_BRAND_PRODUCT(ID),
+	PRICE DECIMAL(12,2) NOT NULL,
+	IS_DEAL BOOLEAN NOT NULL DEFAULT FALSE,
+	PUBLISHED_DATE DATE NOT NULL
 );
 
-create table market_scan.search_history (
-	id bigserial primary key not null,
-	user_id bigserial not null references market_scan.user(id),
-	item_searched bigserial not null references market_scan.item(id),
-	item_opened boolean not null,
-	search_date timestamp not null
+CREATE TABLE MARKET_SCAN.DEAL_HISTORY (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	SELLER_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.PERSON(ID),
+	CITY_BRAND_PRODUCT_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.CITY_BRAND_PRODUCT(ID),
+	DEAL_PUBLISHED DATE NOT NULL,
+	DEAL_REMOVED DATE NOT NULL,
+	DEAL_VIEWED_COUNT INTEGER NOT NULL,
+	LOWEST_PRICE DECIMAL(12,2) NOT NULL,
+	DEAL_PRICE DECIMAL(12,2) NOT NULL
+);
+
+
+CREATE TABLE MARKET_SCAN.SEARCH_HISTORY (
+	ID BIGSERIAL PRIMARY KEY NOT NULL,
+	PERSON_ID BIGINTL NOT NULL REFERENCES MARKET_SCAN.PERSON(ID),
+	CITY_BRAND_PRODUCT_ID BIGINT NOT NULL REFERENCES MARKET_SCAN.CITY_BRAND_PRODUCT(ID),
+	ITEM_OPENED BOOLEAN NOT NULL,
+	SEARCH_DATE TIMESTAMP NOT NULL
 );
