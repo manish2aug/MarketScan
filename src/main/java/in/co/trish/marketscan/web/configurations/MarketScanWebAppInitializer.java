@@ -26,8 +26,8 @@ public class MarketScanWebAppInitializer extends AbstractAnnotationConfigDispatc
 
 	@Override
 	protected Filter[] getServletFilters() {
-		Filter[] corsFilter = { new CORSFilter() };
-		return corsFilter;
+		Filter[] filters = { new CORSFilter() };
+		return filters;
 	}
 
 }

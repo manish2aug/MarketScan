@@ -11,33 +11,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import in.co.trish.marketscan.persistence.entities.Item;
-import in.co.trish.marketscan.web.representation.assembler.ItemResourceAssembler;
-import in.co.trish.marketscan.web.representation.read.ItemReadResource;
-import in.co.trish.marketscan.web.services.ItemService;
+import in.co.trish.marketscan.persistence.entities.Product;
+import in.co.trish.marketscan.web.representation.assembler.ProductResourceAssembler;
+import in.co.trish.marketscan.web.representation.read.ProductResource;
+import in.co.trish.marketscan.web.services.ProductService;
 
 @RequestMapping(value = "/V1/{city}/items")
 @RestController
-public class ItemRestController {
+public class ProductRestController {
 	
 	@Autowired
-	ItemService itemService;
+	ProductService service;
 	
 	@Autowired
-	ItemResourceAssembler assembler;
+	ProductResourceAssembler assembler;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ResponseEntity<List<ItemReadResource>> getItems(@RequestParam("searchString") String searchString, @PathVariable("city") String city) {
+	public ResponseEntity<List<ProductResource>> getItems(@RequestParam("searchString") String searchString, @PathVariable("city") String city) {
 		
-		List<Item> items = itemService.findAll(searchString);
+		List<Product> items = service.findAll(searchString);
+
 		if (items.isEmpty()) {
-			return new ResponseEntity<List<ItemReadResource>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<ProductResource>>(HttpStatus.NO_CONTENT);
 		}
 
 		assembler.setPathParameters(new Object[]{city});
-		List<ItemReadResource> resourceList = assembler.toResources(items);
+		List<ProductResource> resourceList = assembler.toResources(items);
 		
-		return new ResponseEntity<List<ItemReadResource>>(resourceList, HttpStatus.OK);
+		return new ResponseEntity<List<ProductResource>>(resourceList, HttpStatus.OK);
 	}
 	
 }

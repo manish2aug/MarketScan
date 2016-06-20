@@ -4,26 +4,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * @author manish2aug
- * 
- * This entity has a unidirectional relation with {@link City}
- *
- */
 @Entity
-@Table(name = "STATE", schema = "MARKET_SCAN")
-public class State extends IdEntity {
+@Table(name = "ROLE", schema = "MARKET_SCAN")
+public class Role extends IdEntity {
 
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 
-	@Column(name = "code", nullable = false, length = 50)
+	@Column(name = "code", nullable = false, length = 50, unique = true)
 	private String code;
 
-	public State() {
-	}
+	public Role() {}
 
-	public State(long id, String name, String code) {
+	public Role(long id, String name, String code) {
 		this.id = id;
 		this.name = name;
 		this.code = code;
@@ -37,7 +30,7 @@ public class State extends IdEntity {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("State [id=").append(id).append(", name=").append(name).append(", code=").append(code)
+		builder.append("Brand [id=").append(id).append(", name=").append(name).append(", code=").append(code)
 				.append("]");
 		return builder.toString();
 	}

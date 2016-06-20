@@ -4,15 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * @author manish2aug
- * 
- * This entity has a unidirectional relation with {@link City}
- *
- */
 @Entity
-@Table(name = "STATE", schema = "MARKET_SCAN")
-public class State extends IdEntity {
+@Table(name = "PRODUCT_CATEGORY", schema = "MARKET_SCAN")
+public class ProductCategory extends IdEntity {
 
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
@@ -20,24 +14,21 @@ public class State extends IdEntity {
 	@Column(name = "code", nullable = false, length = 50)
 	private String code;
 
-	public State() {
-	}
+	public ProductCategory() {}
 
-	public State(long id, String name, String code) {
+	public ProductCategory(long id, String name, String code) {
 		this.id = id;
 		this.name = name;
 		this.code = code;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("State [id=").append(id).append(", name=").append(name).append(", code=").append(code)
+		builder.append("ProductCategory [id=").append(id).append(", name=").append(name).append(", code=").append(code)
 				.append("]");
 		return builder.toString();
 	}
@@ -50,8 +41,7 @@ public class State extends IdEntity {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -65,8 +55,7 @@ public class State extends IdEntity {
 	}
 
 	/**
-	 * @param code
-	 *            the code to set
+	 * @param code the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
