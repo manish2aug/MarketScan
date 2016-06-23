@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,11 +18,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "PRODUCT", schema = "MARKET_SCAN")
 public class Product extends IdEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7411583460430874491L;
-
 	@NotEmpty
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
@@ -29,14 +25,16 @@ public class Product extends IdEntity {
 	@Column(name = "unit", nullable = false, length = 50)
 	private String unit;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_subcategory_id")
 	private ProductSubcategory subCategory;
 
-	@ManyToMany(mappedBy="products", fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(schema = "MARKET_SCAN", name = "BRAND_PRODUCT", joinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "BRAND_ID", referencedColumnName = "ID"))
 	private Collection<Brand> brands = new HashSet<>();
 	
-	@ManyToMany(mappedBy="products", fetch = FetchType.EAGER)
+	@ManyToMany
+	@JoinTable(schema="MARKET_SCAN", name = "CITY_PRODUCT", joinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "CITY_ID", referencedColumnName = "ID"))
 	private Collection<City> cities = new HashSet<>();
 	
 	public Product() {}

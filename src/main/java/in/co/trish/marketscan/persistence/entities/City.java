@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -32,8 +31,7 @@ public class City extends IdEntity {
 	@JoinColumn(name = "state_id")
 	private State state;
 
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(schema="MARKET_SCAN", name = "CITY_BRAND_PRODUCT", joinColumns = @JoinColumn(name = "BRAND_PRODUCT_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "CITY_ID", referencedColumnName = "ID"))
+	@ManyToMany(mappedBy="cities",fetch = FetchType.EAGER)
 	private Collection<Product> products = new HashSet<>();
 
 	public City() {}

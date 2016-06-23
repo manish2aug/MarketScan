@@ -5,4 +5,5 @@ import org.springframework.hateoas.ResourceSupport;
 public class ProductResource extends ResourceSupport {
 	
 	public String availableItem;
+	public String brandCode;
 }

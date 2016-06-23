@@ -1,11 +1,14 @@
 package in.co.trish.marketscan.web.services.implementations;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import in.co.trish.marketscan.persistence.entities.Brand;
+import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.persistence.repositories.ProductRepository;
 import in.co.trish.marketscan.web.services.ProductService;
@@ -26,8 +29,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> findAll(String searchString) {
-		return repository.findByNameIgnoreCaseContaining(searchString);
+	public List<Product> findAll(String searchString, City[] cities, Collection<Brand> brands) {
+		return repository.findByNameIgnoreCaseContainingAndCitiesInAndBrandsIn(searchString, cities, brands);
 	}
 	
 }

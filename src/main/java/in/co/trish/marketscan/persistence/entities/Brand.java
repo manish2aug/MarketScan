@@ -6,12 +6,8 @@ import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "BRAND", schema = "MARKET_SCAN")
@@ -23,9 +19,7 @@ public class Brand extends IdEntity {
 	@Column(name = "code", nullable = false, length = 50, unique = true)
 	private String code;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(schema = "MARKET_SCAN", name = "BRAND_PRODUCT", joinColumns = @JoinColumn(name = "BRAND_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID"))
-	@JsonManagedReference
+	@ManyToMany(mappedBy="brands",fetch = FetchType.EAGER)
 	private Collection<Product> products = new HashSet<>();
 
 	public Brand() {
