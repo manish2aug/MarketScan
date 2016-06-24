@@ -36,10 +36,10 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
 	 */
 	private void prepareRepresentationData(Product item, ProductResource representation) {
 		ProductSubcategory productSubcategory = item.getSubCategory();
-		representation.availableItem = new StringBuilder(item.getName()).append(" IN [")
+		representation.product = new StringBuilder(item.getName()).append(" IN [")
 				.append(productSubcategory.getName()).append(" ")
 				.append(productSubcategory.getProductCategory().getName()).append("]").toString();
-//		representation.brandCode = item.get
+		representation.brand = item.getBrand().getName();
 	}
 
 	public void setPathParameters(Object... pathParameters) {
