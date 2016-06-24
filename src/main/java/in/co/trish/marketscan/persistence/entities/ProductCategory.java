@@ -19,12 +19,12 @@ public class ProductCategory extends IdEntity {
 	private String code;
 	
 	@OneToMany(mappedBy = "productCategory")
-	private Collection<Product> productSubcategories = new HashSet<>();
+	private Collection<ProductSubcategory> productSubcategories = new HashSet<>();
 	
 	public ProductCategory() {
 	}
 	
-	public ProductCategory(String name, String code, Collection<Product> productSubcategories) {
+	public ProductCategory(String name, String code, Collection<ProductSubcategory> productSubcategories) {
 		this.name = name;
 		this.code = code;
 		this.productSubcategories = productSubcategories;
@@ -53,11 +53,11 @@ public class ProductCategory extends IdEntity {
 		this.code = code;
 	}
 	
-	public Collection<Product> getProductSubcategories() {
+	public Collection<ProductSubcategory> getProductSubcategories() {
 		return productSubcategories;
 	}
 	
-	public void setProductSubcategories(Collection<Product> productSubcategories) {
+	public void setProductSubcategories(Collection<ProductSubcategory> productSubcategories) {
 		this.productSubcategories = productSubcategories;
 	}
 	

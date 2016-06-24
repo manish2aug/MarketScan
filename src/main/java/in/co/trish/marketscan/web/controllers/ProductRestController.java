@@ -1,6 +1,5 @@
 package in.co.trish.marketscan.web.controllers;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +38,8 @@ public class ProductRestController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ProductResource>> getItems(@RequestParam("searchString") String searchString, @PathVariable("cityCode") String cityCode) {
 		
-		HashSet<City> cities = new HashSet<>();
 		City city = cityService.findByCode(cityCode);
-		System.out.println("city name = "+city.getName());
-		cities.add(city);
-		City[] cities1 = {city};
-		List<Product> items = productService.findAll(searchString, cities1,brandService.findAll());
-        
+		List<Product> items = productService.findMatchingProductsInCity(searchString, city);
 		
         if (items.isEmpty()) {
 			return new ResponseEntity<List<ProductResource>>(HttpStatus.NO_CONTENT);
