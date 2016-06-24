@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DEAL_HISTORY", schema = "MARKET_SCAN")
 public class DealHistory extends IdEntity {
-
+	
 	@ManyToOne
 	@JoinColumn(name = "seller_id", nullable = false)
 	private Person seller;
@@ -35,21 +35,11 @@ public class DealHistory extends IdEntity {
 	
 	@Column(name = "deal_price", nullable = false)
 	private BigDecimal dealPrice;
-
-	public DealHistory() {}
-
-	/**
-	 * @param seller
-	 * @param cityBrandProductId
-	 * @param dealPublished
-	 * @param dealRemoved
-	 * @param dealViewedCount
-	 * @param lowestPrice
-	 * @param dealPrice
-	 */
-	public DealHistory(Person seller, Product cityBrandProductId, Date dealPublished, Date dealRemoved,
-			int dealViewedCount, BigDecimal lowestPrice, BigDecimal dealPrice) {
-		super();
+	
+	public DealHistory() {
+	}
+	
+	public DealHistory(Person seller, Product cityBrandProductId, Date dealPublished, Date dealRemoved, int dealViewedCount, BigDecimal lowestPrice, BigDecimal dealPrice) {
 		this.seller = seller;
 		this.cityBrandProductId = cityBrandProductId;
 		this.dealPublished = dealPublished;
@@ -58,111 +48,108 @@ public class DealHistory extends IdEntity {
 		this.lowestPrice = lowestPrice;
 		this.dealPrice = dealPrice;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("DealHistory [seller=").append(seller).append(", cityBrandProductId=").append(cityBrandProductId)
-				.append(", dealPublished=").append(dealPublished).append(", dealRemoved=").append(dealRemoved)
-				.append(", dealViewedCount=").append(dealViewedCount).append(", lowestPrice=").append(lowestPrice)
-				.append(", dealPrice=").append(dealPrice).append("]");
+		builder.append("DealHistory [seller=").append(seller).append(", cityBrandProductId=").append(cityBrandProductId).append(", dealPublished=").append(dealPublished).append(", dealRemoved=").append(dealRemoved).append(", dealViewedCount=").append(dealViewedCount).append(", lowestPrice=").append(lowestPrice).append(", dealPrice=").append(dealPrice).append("]");
 		return builder.toString();
 	}
-
+	
 	/**
 	 * @return the seller
 	 */
 	public Person getSeller() {
 		return seller;
 	}
-
+	
 	/**
 	 * @param seller the seller to set
 	 */
 	public void setSeller(Person seller) {
 		this.seller = seller;
 	}
-
+	
 	/**
 	 * @return the cityBrandProductId
 	 */
 	public Product getCityBrandProductId() {
 		return cityBrandProductId;
 	}
-
+	
 	/**
 	 * @param cityBrandProductId the cityBrandProductId to set
 	 */
 	public void setCityBrandProductId(Product cityBrandProductId) {
 		this.cityBrandProductId = cityBrandProductId;
 	}
-
+	
 	/**
 	 * @return the dealPublished
 	 */
 	public Date getDealPublished() {
 		return dealPublished;
 	}
-
+	
 	/**
 	 * @param dealPublished the dealPublished to set
 	 */
 	public void setDealPublished(Date dealPublished) {
 		this.dealPublished = dealPublished;
 	}
-
+	
 	/**
 	 * @return the dealRemoved
 	 */
 	public Date getDealRemoved() {
 		return dealRemoved;
 	}
-
+	
 	/**
 	 * @param dealRemoved the dealRemoved to set
 	 */
 	public void setDealRemoved(Date dealRemoved) {
 		this.dealRemoved = dealRemoved;
 	}
-
+	
 	/**
 	 * @return the dealViewedCount
 	 */
 	public int getDealViewedCount() {
 		return dealViewedCount;
 	}
-
+	
 	/**
 	 * @param dealViewedCount the dealViewedCount to set
 	 */
 	public void setDealViewedCount(int dealViewedCount) {
 		this.dealViewedCount = dealViewedCount;
 	}
-
+	
 	/**
 	 * @return the lowestPrice
 	 */
 	public BigDecimal getLowestPrice() {
 		return lowestPrice;
 	}
-
+	
 	/**
 	 * @param lowestPrice the lowestPrice to set
 	 */
 	public void setLowestPrice(BigDecimal lowestPrice) {
 		this.lowestPrice = lowestPrice;
 	}
-
+	
 	/**
 	 * @return the dealPrice
 	 */
 	public BigDecimal getDealPrice() {
 		return dealPrice;
 	}
-
+	
 	/**
 	 * @param dealPrice the dealPrice to set
 	 */

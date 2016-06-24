@@ -8,16 +8,15 @@ import javax.persistence.Table;
 @Table(name = "ROLE", schema = "MARKET_SCAN")
 public class Role extends IdEntity {
 
-	@Column(name = "name", nullable = false, length = 100)
+	@Column(name = "name", nullable = false, length = 10)
 	private String name;
 
-	@Column(name = "code", nullable = false, length = 50, unique = true)
+	@Column(name = "code", nullable = false, length = 1, unique = true)
 	private String code;
 
 	public Role() {}
 
-	public Role(long id, String name, String code) {
-		this.id = id;
+	public Role(String name, String code) {
 		this.name = name;
 		this.code = code;
 	}

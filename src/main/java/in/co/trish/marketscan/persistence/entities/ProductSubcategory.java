@@ -25,8 +25,7 @@ public class ProductSubcategory extends IdEntity {
 
 	public ProductSubcategory() {}
 
-	public ProductSubcategory(long id, String name, String code, ProductCategory productCategory) {
-		this.id = id;
+	public ProductSubcategory(String name, String code, ProductCategory productCategory) {
 		this.name = name;
 		this.code = code;
 		this.productCategory = productCategory;

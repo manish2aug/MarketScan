@@ -10,20 +10,13 @@ public abstract class IdEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Long id;
+	protected Integer id;
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
