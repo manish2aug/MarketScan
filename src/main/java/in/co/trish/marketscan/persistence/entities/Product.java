@@ -7,6 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value="Product", description="Product to be searched")
 @Entity
 @Table(name = "PRODUCT", schema = "MARKET_SCAN")
 public class Product extends IdEntity {

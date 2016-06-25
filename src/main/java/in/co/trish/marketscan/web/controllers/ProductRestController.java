@@ -21,12 +21,17 @@ import in.co.trish.marketscan.web.services.CityService;
 import in.co.trish.marketscan.web.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ResponseHeader;
 
 @RequestMapping(value = "/v1/{cityCode}/products")
-@Api("/v1/{cityCode}/products")
 @RestController
+@Api(tags = {"Available products in a city"}, 
+				produces="application/json", 
+				consumes="application/vnd.market-scan.v1+json", 
+				protocols="http")
 public class ProductRestController {
 
 	@Autowired
@@ -41,17 +46,21 @@ public class ProductRestController {
 	@Autowired
 	ProductResourceAssembler assembler;
 
-	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 })
-	@ApiOperation(value = "Find the person with the specified guid")
+	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 },produces={"application/json"})
+	@ApiOperation(value = "Find available products matching with supplied identifier in user's current city", 
+					notes = "System would build a nice description of found product by combining brand and category",
+					response = Product.class, responseContainer = "List")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "JSON representation of person including other accessible application states"), 
-			@ApiResponse(code = 404, message = "No person found with supplied guid"), 
-			@ApiResponse(code = 500, message = "Server error occurred")
+			@ApiResponse(code = 200, message = "JSON representation of collection of products including other accessible application states", 
+					responseHeaders = @ResponseHeader(name = "Content-Type", description = "application/vnd.market-scan.v1+json", response = String.class)), 
+			@ApiResponse(code = 404, message = "No product found"), 
+			@ApiResponse(code = 500, message = "Something went wrong!"),
+			@ApiResponse(code = 415, message = "Unsupported media type")
 		}
 	)
 	public ResponseEntity<List<ProductResource>> getItems(
-			@RequestParam(name = "searchString", required = true) String searchString,
-			@PathVariable("cityCode") String cityCode) {
+			@ApiParam(value = "Search string contained in product name", required = true) @RequestParam(name = "searchString", required = true) String searchString,
+			@ApiParam(value = "City from where user initiates the product search", required = true) @PathVariable("cityCode") String cityCode) {
 
 		// provide all path parameters
 		assembler.pathParameters.add(cityCode);
