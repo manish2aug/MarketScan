@@ -19,8 +19,13 @@ import in.co.trish.marketscan.web.representation.read.ProductResource;
 import in.co.trish.marketscan.web.services.BrandService;
 import in.co.trish.marketscan.web.services.CityService;
 import in.co.trish.marketscan.web.services.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RequestMapping(value = "/v1/{cityCode}/products")
+@Api("/v1/{cityCode}/products")
 @RestController
 public class ProductRestController {
 
@@ -37,6 +42,13 @@ public class ProductRestController {
 	ProductResourceAssembler assembler;
 
 	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 })
+	@ApiOperation(value = "Find the person with the specified guid")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "JSON representation of person including other accessible application states"), 
+			@ApiResponse(code = 404, message = "No person found with supplied guid"), 
+			@ApiResponse(code = 500, message = "Server error occurred")
+		}
+	)
 	public ResponseEntity<List<ProductResource>> getItems(
 			@RequestParam(name = "searchString", required = true) String searchString,
 			@PathVariable("cityCode") String cityCode) {

@@ -1,7 +1,7 @@
 /**
  *
  */
-package in.co.trish.marketscan.persistence.configurations;
+package in.co.trish.marketscan.configurations.persistence;
 
 import java.util.Properties;
 

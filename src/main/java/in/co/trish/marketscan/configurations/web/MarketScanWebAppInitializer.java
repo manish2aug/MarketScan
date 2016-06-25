@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.configurations;
+package in.co.trish.marketscan.configurations.web;
 
 import javax.servlet.Filter;
 

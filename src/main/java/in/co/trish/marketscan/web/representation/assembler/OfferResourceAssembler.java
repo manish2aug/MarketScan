@@ -25,7 +25,6 @@ public class OfferResourceAssembler extends ResourceAssemblerSupport<Offer, Offe
 		OfferReadResource representation = instantiateResource(offer);
 		prepareRepresentationData(offer, representation);
 		representation.add(ControllerLinkBuilder.linkTo(OfferRestController.class, pathParameters.toArray()).slash(offer.getId()).withSelfRel());
-
 		return representation;
 	}
 

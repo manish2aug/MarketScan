@@ -20,7 +20,7 @@ import in.co.trish.marketscan.web.representation.read.OfferReadResource;
 import in.co.trish.marketscan.web.services.OffersService;
 import in.co.trish.marketscan.web.services.ProductService;
 
-@RequestMapping(value = "/v1/{cityCode}/products/{productId}/comparison")
+@RequestMapping(value = "/v1/{cityCode}/products/{productId}/offers")
 @RestController
 public class OfferRestController {
 	
@@ -33,26 +33,39 @@ public class OfferRestController {
 	@Autowired
 	OfferResourceAssembler assembler;
 	
-	@RequestMapping(method = RequestMethod.GET, consumes={MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1})
-	public ResponseEntity<List<OfferReadResource>> retrieveBestOffersInMarket(
-			@RequestParam(name = "distance", required=true, defaultValue="0") String searchString, 
-			@PathVariable("cityCode") String cityCode,
-			@PathVariable("productId") int productId) {
-		
+	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1})
+	public ResponseEntity<List<OfferReadResource>> retrieveBestOffersInMarket(@RequestParam(name = "distance", required = true, defaultValue = "0") String searchString, @PathVariable("cityCode") String cityCode, @PathVariable("productId") int productId) {
 		// TODO: At the same time save this search to search history 
-
 		// provide all path parameters
 		assembler.pathParameters.add(cityCode);
 		assembler.pathParameters.add(productId);
-			
 		Product product = productService.findById(productId);
 		Collection<Offer> offers = offerService.retrieveBestOffersInMarket(product);
-		
 		List<OfferReadResource> offerComparisonResources = assembler.toResources(offers);
 		if (offerComparisonResources.isEmpty()) {
 			return new ResponseEntity<List<OfferReadResource>>(HttpStatus.NO_CONTENT);
 		}
-		
 		return new ResponseEntity<List<OfferReadResource>>(offerComparisonResources, HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1}, path={"/{offerId}"})
+	public ResponseEntity<OfferReadResource> getOfferDetails(
+			@RequestParam(name = "distance", required = true, defaultValue = "0") String searchString, 
+			@PathVariable("cityCode") String cityCode, 
+			@PathVariable("productId") int productId,
+			@PathVariable("offerId") int offerId
+			) {
+		// TODO: At the same time save this to user view history 
+		// provide all path parameters
+		assembler.pathParameters.add(cityCode);
+		assembler.pathParameters.add(productId);
+		Offer offers = offerService.getOffer(offerId);
+		OfferReadResource offerComparisonResource = assembler.toResource(offers);
+		if (null == offerComparisonResource) {
+			return new ResponseEntity<OfferReadResource>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<OfferReadResource>(offerComparisonResource, HttpStatus.OK);
+	}
+	
+	
 }
