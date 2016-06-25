@@ -8,4 +8,6 @@ import in.co.trish.marketscan.persistence.entities.Product;
 public interface ProductService {
 	
 	List<Product> findMatchingProductsInCity(String searchString, City city);
+
+	Product findById(int productId);
 }

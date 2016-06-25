@@ -26,4 +26,9 @@ public class ProductServiceImpl implements ProductService {
 		return repository.findByNameIgnoreCaseContainingAndCity(searchString, city);
 	}
 	
+	@Override
+	public Product findById(int productId) {
+		return repository.findOne(productId);
+	}
+	
 }

@@ -1,6 +1,5 @@
 package in.co.trish.marketscan.persistence.entities;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,18 +10,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "OFFERS", schema = "MARKET_SCAN")
-public class Offers extends IdEntity {
+public class Offer extends IdEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "seller_id", nullable = false)
 	private Person seller;
 	
 	@ManyToOne
-	@JoinColumn(name = "city_brand_product_id", nullable = false)
+	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
 	@Column(name = "price", nullable = false)
-	private BigDecimal price;
+	private String price;
 	
 	@Column(name = "is_deal", nullable = false)
 	private boolean isDeal = false;
@@ -30,10 +29,10 @@ public class Offers extends IdEntity {
 	@Column(name = "published_date", nullable = false)
 	private Date publishedDate;
 	
-	public Offers() {
+	public Offer() {
 	}
 	
-	public Offers(Person seller, Product product, BigDecimal price, boolean isDeal, Date publishedDate) {
+	public Offer(Person seller, Product product, String price, boolean isDeal, Date publishedDate) {
 		this.seller = seller;
 		this.product = product;
 		this.price = price;
@@ -82,14 +81,14 @@ public class Offers extends IdEntity {
 	/**
 	 * @return the price
 	 */
-	public BigDecimal getPrice() {
+	public String getPrice() {
 		return price;
 	}
 	
 	/**
 	 * @param price the price to set
 	 */
-	public void setPrice(BigDecimal price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	

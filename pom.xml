@@ -189,7 +189,7 @@
 			<artifactId>spring-hateoas</artifactId>
 			<version>0.20.0.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Java money api -->
 		<dependency>
 			<groupId>javax.money</groupId>
@@ -197,6 +197,11 @@
 			<version>1.0.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.javamoney</groupId>
+			<artifactId>moneta</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<!-- http://mvnrepository.com/artifact/org.springframework/spring-framework-bom -->
