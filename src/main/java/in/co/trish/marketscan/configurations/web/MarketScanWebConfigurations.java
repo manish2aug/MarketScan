@@ -1,7 +1,7 @@
 /**
  *
  */
-package in.co.trish.marketscan.web.configurations;
+package in.co.trish.marketscan.configurations.web;
 
 import java.util.Properties;
 
@@ -17,29 +17,31 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 @Configuration
-@ComponentScan(basePackages = { "in.co.trish.marketscan.web" })
+@ComponentScan(basePackages = {"in.co.trish.marketscan.web"})
 @EnableWebMvc
 public class MarketScanWebConfigurations extends WebMvcConfigurerAdapter {
-
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
-
+	
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-
+	
 	@Bean(name = "messageSource")
 	public MessageSource configureMessageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("classpath:messages"); 
+		messageSource.setBasename("classpath:messages");
 		messageSource.setCacheSeconds(5);
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
 	}
-
+	
 	@Bean
 	public SimpleMappingExceptionResolver simpleMappingExceptionResolver() {
 		SimpleMappingExceptionResolver b = new SimpleMappingExceptionResolver();

@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.security.configurations;
+package in.co.trish.marketscan.configurations.security;
 ///**
 // *
 // */

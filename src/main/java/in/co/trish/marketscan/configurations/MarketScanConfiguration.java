@@ -1,8 +1,5 @@
 package in.co.trish.marketscan.configurations;
 
-import in.co.trish.marketscan.persistence.configurations.MarketScanPersistenceConfiguration;
-import in.co.trish.marketscan.web.configurations.MarketScanWebConfigurations;
-
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +18,17 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import in.co.trish.marketscan.configurations.persistence.MarketScanPersistenceConfiguration;
+import in.co.trish.marketscan.configurations.swagger.MarketScanSwaggerConfiguration;
+import in.co.trish.marketscan.configurations.web.MarketScanWebConfigurations;
+
 @Configuration
 @ComponentScan(basePackages = { "co.in.trish.marketscan" }, excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = { "co.in.trish.marketscan.web.filters.*" }))
 @PropertySource(value = { "classpath:application.properties" })
 @EnableScheduling
 @EnableAspectJAutoProxy
 @EnableCaching
-@Import({ MarketScanPersistenceConfiguration.class, MarketScanWebConfigurations.class })
+@Import({ MarketScanPersistenceConfiguration.class, MarketScanWebConfigurations.class, MarketScanSwaggerConfiguration.class })
 public class MarketScanConfiguration {
 
     @Autowired

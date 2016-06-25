@@ -9,4 +9,6 @@ public interface OffersService {
 
 	Collection<Offer> retrieveBestOffersInMarket(Product product);
 
+	Offer getOffer(int offerId);
+
 }

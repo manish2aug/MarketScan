@@ -23,4 +23,9 @@ public class OffersComparisonServiceImpl implements OffersService {
 		return offerRrepository.findTop5ByProductOrderByPrice(product);
 	}
 
+	@Override
+	public Offer getOffer(int offerId) {
+		return offerRrepository.findOne(offerId);
+	}
+
 }
