@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+
+
+	<!-- ***** RE-ROUTE THE AWFUL java.util.logging to SLF4J config ***** -->
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<property name="log.dir" value="D:/Development_DoNotDelete/MarketScan/logs" />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{HH:mm}|%.-1level| %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- ********************** HTTP ACCESS logs***************************************** -->
+	<appender name="http"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.dir}/market-scan-http.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>market-scan-http.%d{yyyy-MM-dd}.log.zip
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%n%fullRequest%n%fullResponse%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- *************************************************************** -->
+	<appender name="appfile" class="ch.qos.logback.core.FileAppender">
+		<file>${log.dir}/market-scan.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%date{HH:mm:sss} [%.-5level] %-40.40logger{0} %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<logger level="debug" additivity="false" name="in.co.trish.marketscan">
+		<appender-ref ref="appfile" />
+		<appender-ref ref="http" />
+		
+	</logger>
+
+	<!-- *************************************************************** -->
+	<appender name="springwebfile" class="ch.qos.logback.core.FileAppender">
+		<file>${log.dir}/spring-web.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>[%.-5level] %msg%n%n</pattern>
+		</encoder>
+	</appender>
+	<logger name="org.springframework.web" additivity="false" level="trace">
+		<appender-ref ref="springwebfile" />
+	</logger>
+
+	<!-- *************************************************************** -->
+	<appender name="hibernatefile" class="ch.qos.logback.core.FileAppender">
+		<file>${log.dir}/hibernate.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%d{HH:mm}|%.-1level|%-40.40logger{0}|%msg%n</pattern>
+		</encoder>
+	</appender>
+	<logger name="org.hibernate" additivity="false" level="debug">
+		<appender-ref ref="hibernatefile" />
+	</logger>
+	<logger name="org.springframework.orm" additivity="false" level="debug">
+		<appender-ref ref="hibernatefile" />
+	</logger>
+	<logger name="org.springframework.dao" additivity="false" level="debug">
+		<appender-ref ref="hibernatefile" />
+	</logger>
+	<logger name="org.springframework.data" additivity="false"
+		level="debug">
+		<appender-ref ref="hibernatefile" />
+	</logger>
+	<logger name="org.springframework.jdbc" additivity="false"
+		level="debug">
+		<appender-ref ref="hibernatefile" />
+	</logger>
+	<logger name="org.springframework.transaction" additivity="false"
+		level="debug">
+		<appender-ref ref="hibernatefile" />
+	</logger>
+
+	<root level="warn">
+		<appender-ref ref="console" />
+	</root>
+</configuration>

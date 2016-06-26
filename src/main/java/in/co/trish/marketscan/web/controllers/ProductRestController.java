@@ -2,6 +2,8 @@ package in.co.trish.marketscan.web.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,8 @@ import io.swagger.annotations.ResponseHeader;
 				protocols="http")
 public class ProductRestController {
 
+	private static final Logger logger = LoggerFactory.getLogger(ProductRestController.class);
+	
 	@Autowired
 	ProductService productService;
 
@@ -73,7 +77,12 @@ public class ProductRestController {
 		}
 
 		List<ProductResource> resourceList = assembler.toResources(products);
-
+		logger.debug("CIty code: ",cityCode);
+		logger.trace("Hello World!");
+		logger.debug("How are you today?");
+		logger.info("I am fine.");
+		logger.warn("I love programming.");
+		logger.error("I am programming.");
 		return new ResponseEntity<List<ProductResource>>(resourceList, HttpStatus.OK);
 	}
 
