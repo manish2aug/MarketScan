@@ -2,6 +2,7 @@ package in.co.trish.marketscan.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -28,11 +29,11 @@ public class SellerReview extends IdEntity {
 	@Column(name = "review_comment", nullable = false)
 	private String reviewComment;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "seller_id", nullable = false)
 	private Person seller;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "reviewer_id", nullable = false)
 	private Person reviewer;
 	
