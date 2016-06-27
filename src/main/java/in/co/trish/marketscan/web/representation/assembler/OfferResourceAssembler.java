@@ -1,13 +1,17 @@
 package in.co.trish.marketscan.web.representation.assembler;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import in.co.trish.marketscan.application.MarketScanUtils;
 import in.co.trish.marketscan.persistence.entities.Offer;
+import in.co.trish.marketscan.persistence.entities.Person;
+import in.co.trish.marketscan.persistence.entities.SellerReview;
 import in.co.trish.marketscan.web.controllers.OfferRestController;
 import in.co.trish.marketscan.web.representation.read.OfferReadResource;
 
@@ -15,6 +19,8 @@ import in.co.trish.marketscan.web.representation.read.OfferReadResource;
 public class OfferResourceAssembler extends ResourceAssemblerSupport<Offer, OfferReadResource> {
 
 	public List<Object> pathParameters = new ArrayList<>();
+	public double userLatitude;
+	public double userLongitude;
 
 	public OfferResourceAssembler() {
 		super(OfferRestController.class, OfferReadResource.class);
@@ -36,19 +42,21 @@ public class OfferResourceAssembler extends ResourceAssemblerSupport<Offer, Offe
 	 */
 	private void prepareRepresentationData(Offer offer, OfferReadResource representation) {
 		representation.price = offer.getPrice();
-		representation.distance = calculateDistance();
-		representation.rating = retrieveRating();
-		representation.isDeliveryAvailable = offer.getSeller().isDeliveryAvailable();
+		Person seller = offer.getSeller();
+		representation.isDeliveryAvailable = seller.isDeliveryAvailable();
+		representation.rating = retrieveRating(offer);
+		representation.distance = MarketScanUtils.distanceInMeter(seller.getLattitude(), seller.getLongitude(), userLatitude, userLongitude);
 	}
 
-	private int retrieveRating() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	private double calculateDistance() {
-		// TODO: compute the distance
-		return 0;
+	private int retrieveRating(Offer offer) {
+		Collection<SellerReview> reviews = offer.getSeller().getReviews();
+		int rating = 0;
+		for (SellerReview sellerReview : reviews) {
+			rating =rating + sellerReview.getOverallRating();
+		}
+		if(reviews.size() == 0)
+			return 0;
+		return rating/reviews.size();
 	}
 
 }

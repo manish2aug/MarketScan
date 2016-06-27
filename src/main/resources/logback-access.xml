@@ -2,7 +2,13 @@
 <configuration>
 	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 
-	<appender name="http" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="http"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>market-scan-http.%d{yyyy-MM-dd}.log.zip
+			</fileNamePattern>
+		</rollingPolicy>
 		<encoder>
 			<pattern>%n%fullRequest%n%fullResponse%n</pattern>
 		</encoder>

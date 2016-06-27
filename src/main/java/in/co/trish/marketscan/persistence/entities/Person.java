@@ -2,7 +2,6 @@ package in.co.trish.marketscan.persistence.entities;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -75,10 +74,10 @@ public class Person extends IdEntity {
 	private String pinCode;
 	
 	@Column(name = "longitude", nullable = false, length = 100)
-	private String longitude;;
+	private double longitude;;
 	
 	@Column(name = "lattitude", nullable = false, length = 20)
-	private String lattitude;
+	private double lattitude;
 	
 	@Column(name = "last_login_date", nullable = true, length = 100)
 	private Date lastLoginDate;
@@ -103,13 +102,13 @@ public class Person extends IdEntity {
 	@OneToOne
 	private DealAccount dealAccount;
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	private Collection<SellerReview> reviews = new HashSet<>();
+	@OneToMany(mappedBy="seller", fetch=FetchType.EAGER)
+	private Collection<SellerReview> reviews;
 	
 	public Person() {
 	}
 
-	public Person(String fullName, String userName, String password, String uuid, String macAddress, String ipAddress, String deviceId, String shopName, String mobileNo, String landlineNo, String whatsappNo, String emailAddress, String physicalAddressLine1, String physicalAddressLine2, String landmark, String town, String locality, String subLocality, String pinCode, String longitude, String lattitude, Date lastLoginDate, String lastActivity, boolean isDeliveryAvailable, Date registrationDate, Role role, City city, DealAccount dealAccount, Collection<SellerReview> reviews) {
+	public Person(String fullName, String userName, String password, String uuid, String macAddress, String ipAddress, String deviceId, String shopName, String mobileNo, String landlineNo, String whatsappNo, String emailAddress, String physicalAddressLine1, String physicalAddressLine2, String landmark, String town, String locality, String subLocality, String pinCode, double longitude, double lattitude, Date lastLoginDate, String lastActivity, boolean isDeliveryAvailable, Date registrationDate, Role role, City city, DealAccount dealAccount, Collection<SellerReview> reviews) {
 		super();
 		this.fullName = fullName;
 		this.userName = userName;
@@ -340,22 +339,22 @@ public class Person extends IdEntity {
 	}
 
 	
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
 	
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
 	
-	public String getLattitude() {
+	public double getLattitude() {
 		return lattitude;
 	}
 
 	
-	public void setLattitude(String lattitude) {
+	public void setLattitude(double lattitude) {
 		this.lattitude = lattitude;
 	}
 

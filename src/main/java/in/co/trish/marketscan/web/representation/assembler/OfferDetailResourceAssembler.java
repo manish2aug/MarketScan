@@ -8,6 +8,7 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import in.co.trish.marketscan.application.MarketScanUtils;
 import in.co.trish.marketscan.persistence.entities.Offer;
 import in.co.trish.marketscan.persistence.entities.Person;
 import in.co.trish.marketscan.persistence.entities.SellerReview;
@@ -18,6 +19,8 @@ import in.co.trish.marketscan.web.representation.read.OfferDetailReadResource;
 public class OfferDetailResourceAssembler extends ResourceAssemblerSupport<Offer, OfferDetailReadResource> {
 	
 	public List<Object> pathParameters = new ArrayList<>();
+	public double userLatitude;
+	public double userLongitude;
 	
 	public OfferDetailResourceAssembler() {
 		super(OfferRestController.class, OfferDetailReadResource.class);
@@ -38,9 +41,15 @@ public class OfferDetailResourceAssembler extends ResourceAssemblerSupport<Offer
 	 * @param res
 	 */
 	private void prepareRepresentationData(Offer offer, OfferDetailReadResource res) {
-		// populate seller's details
+		
+		// populate offer details
+		res.price = offer.getPrice();
 		Person seller = offer.getSeller();
 		res.isDeliveryAvailable = seller.isDeliveryAvailable();
+		res.rating = retrieveRating(offer);
+		res.distance = MarketScanUtils.distanceInMeter(seller.getLattitude(), seller.getLongitude(), userLatitude, userLongitude);
+		
+		// populate seller's details
 		StringBuilder temp = new StringBuilder();
 		res.sellerAddress = temp.append(seller.getShopName())
 								.append("\n").append(seller.getPhysicalAddressLine1()).append(", ").append(seller.getPhysicalAddressLine2())
@@ -62,7 +71,17 @@ public class OfferDetailResourceAssembler extends ResourceAssemblerSupport<Offer
 			if(i==1) break;
 			i++;
 		}
+		
 	}
 	
-	
+	private int retrieveRating(Offer offer) {
+		Collection<SellerReview> reviews = offer.getSeller().getReviews();
+		int rating = 0;
+		for (SellerReview sellerReview : reviews) {
+			rating =rating + sellerReview.getOverallRating();
+		}
+		if(reviews.size() == 0)
+			return 0;
+		return rating/reviews.size();
+	}
 }
