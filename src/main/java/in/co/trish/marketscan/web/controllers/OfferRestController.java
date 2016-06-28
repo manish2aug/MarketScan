@@ -53,7 +53,8 @@ public class OfferRestController {
 			// other required parameters to process the request 
 			@RequestParam(name = "distance", required = true, defaultValue = "0.00") @ApiParam(value = "Radial distance in which search should be done", required = true) String searchString, 
 			@PathVariable("cityCode") @ApiParam(value = "Search string contained in product name", required = true) String cityCode, 
-			@PathVariable("productId") @ApiParam(value = "Search string contained in product name", required = true) int productId) {
+			@PathVariable("productId") @ApiParam(value = "Search string contained in product name", required = true) int productId
+			) {
 		
 		// TODO: At the same time save this search to search history 
 		// searchHistoryService.save(all parameters to be saved);
@@ -87,9 +88,9 @@ public class OfferRestController {
 			@RequestParam(name = "deviceId", required = true, defaultValue = "0000000000") @ApiParam(value = "User's requesting mmobile/tablet initiating device id", required = true) String deviceId, 
 			@RequestParam(name = "mobileNo", required = true, defaultValue = "0000000000") @ApiParam(value = "User's mobile no", required = true) String mobileNo, 
 			// other required parameters to process the request 
-			@PathVariable("cityCode") String cityCode, 
-			@PathVariable("productId") int productId,
-			@PathVariable("offerId") int offerId) {
+			@PathVariable("cityCode") @ApiParam(value = "Search string contained in product name", required = true) String cityCode, 
+			@PathVariable("productId") @ApiParam(value = "Search string contained in product name", required = true) int productId,
+			@PathVariable("offerId") @ApiParam(value = "offer id", required = true) int offerId) {
 		
 		// TODO: At the same time save this to user view history 
 		// provide all path parameters

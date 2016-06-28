@@ -38,50 +38,50 @@ public class OfferDetailResourceAssembler extends ResourceAssemblerSupport<Offer
 	 * Copy data from entity to make it available on view
 	 * 
 	 * @param item
-	 * @param res
+	 * @param representation
 	 */
-	private void prepareRepresentationData(Offer offer, OfferDetailReadResource res) {
+	private void prepareRepresentationData(Offer offer, OfferDetailReadResource representation) {
 		
 		// populate offer details
-		res.price = offer.getPrice();
+		representation.price = offer.getPrice();
 		Person seller = offer.getSeller();
-		res.isDeliveryAvailable = seller.isDeliveryAvailable();
-		res.rating = retrieveRating(offer);
-		res.distance = MarketScanUtils.distanceInMeter(seller.getLattitude(), seller.getLongitude(), userLatitude, userLongitude);
+		representation.sellerName = seller.getFullName();
+		representation.sellerEmailAddress = seller.getEmailAddress();
+		representation.isDeliveryAvailable = seller.isDeliveryAvailable();
+		representation.distance = MarketScanUtils.distanceInMeter(seller.getLattitude(), seller.getLongitude(), userLatitude, userLongitude);
 		
 		// populate seller's details
 		StringBuilder temp = new StringBuilder();
-		res.sellerAddress = temp.append(seller.getShopName())
+		representation.sellerAddress = temp.append(seller.getShopName())
 								.append("\n").append(seller.getPhysicalAddressLine1()).append(", ").append(seller.getPhysicalAddressLine2())
 								.append("\n").append(seller.getSubLocality()).append(", ").append(seller.getLocality()).append(", ").append(seller.getTown())
 								.append("\n").append(seller.getPinCode()).toString(); 
 		temp.setLength(0);
-		res.sellerGpsLocation = temp.append(seller.getLattitude()).append(", ").append(seller.getLongitude()).toString();
+		representation.sellerGpsLocation = temp.append(seller.getLattitude()).append(", ").append(seller.getLongitude()).toString();
 		temp.setLength(0);
-		res.sellerContactDetails = temp.append("Phone: ").append(seller.getMobileNo()).append("(Business)").append(((!seller.getLandlineNo().isEmpty()) ? ", "+seller.getLandlineNo():"")).toString();
+		representation.sellerContactDetails = temp.append("Phone: ").append(seller.getMobileNo()).append("(Business)").append(((!seller.getLandlineNo().isEmpty()) ? ", "+seller.getLandlineNo():"")).toString();
 		
 		Collection<SellerReview> reviews = seller.getReviews();
 		temp.setLength(0);
+		setRatingAndReviews(reviews,temp,representation);
+	}
+	
+	private void setRatingAndReviews(Collection<SellerReview> reviews, StringBuilder temp, OfferDetailReadResource representation) {
+		int rating = 0;
 		int i=0;
 		for (SellerReview sellerReview : reviews) {
+			rating =rating + sellerReview.getOverallRating();
 			if(i==1){
 				temp.append(" \n ");
 			}
-			temp.append("\"").append(sellerReview.getComment()).append("\"").append(" Rating out of 5: ").append(sellerReview.getOverallRating()).append(" - ").append(sellerReview.getReviewer().getFullName());
-			if(i==1) break;
+			if(i<2){
+				temp.append("'").append(sellerReview.getComment()).append("'").append(" Rating out of 5: ").append(sellerReview.getOverallRating()).append(" - ").append(sellerReview.getReviewer().getFullName());
+			}
 			i++;
 		}
 		
-	}
-	
-	private int retrieveRating(Offer offer) {
-		Collection<SellerReview> reviews = offer.getSeller().getReviews();
-		int rating = 0;
-		for (SellerReview sellerReview : reviews) {
-			rating =rating + sellerReview.getOverallRating();
-		}
-		if(reviews.size() == 0)
-			return 0;
-		return rating/reviews.size();
+		representation.rating = (reviews.size() == 0)?0:rating/reviews.size();
+		representation.reviews = temp.toString();
+		temp.setLength(0);
 	}
 }
