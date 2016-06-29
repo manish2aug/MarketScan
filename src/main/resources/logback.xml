@@ -23,9 +23,12 @@
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${log.dir}/market-scan-app.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>
-				market-scan-app.%d{yyyy-MM-dd_HH-mm}.log.zip
-			</FileNamePattern>
+			<fileNamePattern>${log.dir}/market-scan-app_%d{dd-MMM-yyyy}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<pattern>
