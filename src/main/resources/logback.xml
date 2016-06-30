@@ -22,6 +22,7 @@
 	<appender name="application_logs"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${log.dir}/market-scan-app.log</File>
+		
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>${log.dir}/market-scan-app_%d{dd-MMM-yyyy}.%i.log
 			</fileNamePattern>

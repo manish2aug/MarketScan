@@ -1,6 +1,7 @@
 package in.co.trish.marketscan.web.controllers;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -28,30 +29,47 @@ import io.swagger.annotations.ApiResponses;
 
 @RequestMapping(value = "/v1/{cityCode}/person")
 @RestController
-@Api(tags = {"sellers in a city"}, 
-				produces="application/json", 
-				consumes="application/vnd.market-scan.v1+json", 
-				protocols="http")
+@Api(tags = {
+		"sellers in a city" }, produces = "application/json", consumes = "application/vnd.market-scan.v1+json", protocols = "http")
 public class PersonRestController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonRestController.class);
-	
+
 	@Autowired
 	PersonService personService;
 
-	@RequestMapping(method = RequestMethod.POST, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 },produces={"application/json"})
+	@RequestMapping(method = RequestMethod.POST, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 }, produces = { "application/json" })
 	@ApiOperation(value = "Saves a seller", notes = "would return a payload stating the transaction status")
-	@ApiResponses(value = {
+	@ApiResponses(value = { 
 			@ApiResponse(code = 201, message = "successful response"),
-			@ApiResponse(code = 500, message = "Something went wrong!") })
-	public ResponseEntity<List<ProductResource>> register(@PathVariable("cityCode") String cityCode, @RequestBody Person input) {
+			@ApiResponse(code = 500, message = "Something went wrong!") 
+		}
+	)
+	public ResponseEntity<List<ProductResource>> register(
+			@PathVariable("cityCode") String cityCode,
+			@RequestBody Person input)
+	{
 		logger.debug("create person method called");
 		// provide all path parameters
 		Person person = personService.save(input);
 		HttpHeaders httpHeaders = new HttpHeaders();
-        Link forOnePerson = new PersonResource(person).getLink("self");
-        httpHeaders.setLocation(URI.create(forOnePerson.getHref()));
-        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+		Link forOnePerson = new PersonResource(person).getLink("self");
+		httpHeaders.setLocation(URI.create(forOnePerson.getHref()));
+		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 }, produces = { "application/json" })
+	@ApiOperation(value = "Saves a seller", notes = "would return a payload stating the transaction status")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 201, message = "successful response"),
+			@ApiResponse(code = 500, message = "Something went wrong!") 
+			}
+	)
+	public ResponseEntity<List<ProductResource>> getSellers(@PathVariable("cityCode") String cityCode) {
+		
+		logger.debug("Retrieving all sellers within a city");
+		Collection<Person> persons = personService.findAllSellers();
+		return null;
 	}
 
 }

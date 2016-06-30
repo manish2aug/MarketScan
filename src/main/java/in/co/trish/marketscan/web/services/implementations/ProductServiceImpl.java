@@ -27,8 +27,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product findById(int productId) {
+	public Product find(int productId) {
 		return repository.findOne(productId);
 	}
+	
+	@Override
+	public Product add(Product product) {
+		return repository.saveAndFlush(product);
+	}
+	
+	
 	
 }

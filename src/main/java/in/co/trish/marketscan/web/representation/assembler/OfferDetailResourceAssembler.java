@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import in.co.trish.marketscan.application.MarketScanUtils;
 import in.co.trish.marketscan.persistence.entities.Offer;
 import in.co.trish.marketscan.persistence.entities.Person;
-import in.co.trish.marketscan.persistence.entities.SellerReview;
+import in.co.trish.marketscan.persistence.entities.Review;
 import in.co.trish.marketscan.web.controllers.OfferRestController;
 import in.co.trish.marketscan.web.representation.read.OfferDetailReadResource;
 
@@ -61,15 +61,15 @@ public class OfferDetailResourceAssembler extends ResourceAssemblerSupport<Offer
 		temp.setLength(0);
 		representation.sellerContactDetails = temp.append("Phone: ").append(seller.getMobileNo()).append("(Business)").append(((!seller.getLandlineNo().isEmpty()) ? ", "+seller.getLandlineNo():"")).toString();
 		
-		Collection<SellerReview> reviews = seller.getReviews();
+		Collection<Review> reviews = seller.getReviews();
 		temp.setLength(0);
 		setRatingAndReviews(reviews,temp,representation);
 	}
 	
-	private void setRatingAndReviews(Collection<SellerReview> reviews, StringBuilder temp, OfferDetailReadResource representation) {
+	private void setRatingAndReviews(Collection<Review> reviews, StringBuilder temp, OfferDetailReadResource representation) {
 		int rating = 0;
 		int i=0;
-		for (SellerReview sellerReview : reviews) {
+		for (Review sellerReview : reviews) {
 			rating =rating + sellerReview.getOverallRating();
 			if(i==1){
 				temp.append(" \n ");

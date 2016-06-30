@@ -103,12 +103,12 @@ public class Person extends IdEntity {
 	private DealAccount dealAccount;
 	
 	@OneToMany(mappedBy="seller", fetch=FetchType.EAGER)
-	private Collection<SellerReview> reviews;
+	private Collection<Review> reviews;
 	
 	public Person() {
 	}
 
-	public Person(String fullName, String userName, String password, String uuid, String macAddress, String ipAddress, String deviceId, String shopName, String mobileNo, String landlineNo, String whatsappNo, String emailAddress, String physicalAddressLine1, String physicalAddressLine2, String landmark, String town, String locality, String subLocality, String pinCode, double longitude, double lattitude, Date lastLoginDate, String lastActivity, boolean isDeliveryAvailable, Date registrationDate, Role role, City city, DealAccount dealAccount, Collection<SellerReview> reviews) {
+	public Person(String fullName, String userName, String password, String uuid, String macAddress, String ipAddress, String deviceId, String shopName, String mobileNo, String landlineNo, String whatsappNo, String emailAddress, String physicalAddressLine1, String physicalAddressLine2, String landmark, String town, String locality, String subLocality, String pinCode, double longitude, double lattitude, Date lastLoginDate, String lastActivity, boolean isDeliveryAvailable, Date registrationDate, Role role, City city, DealAccount dealAccount, Collection<Review> reviews) {
 		super();
 		this.fullName = fullName;
 		this.userName = userName;
@@ -429,12 +429,12 @@ public class Person extends IdEntity {
 	}
 
 	
-	public Collection<SellerReview> getReviews() {
+	public Collection<Review> getReviews() {
 		return reviews;
 	}
 
 	
-	public void setReviews(Collection<SellerReview> reviews) {
+	public void setReviews(Collection<Review> reviews) {
 		this.reviews = reviews;
 	}
 	

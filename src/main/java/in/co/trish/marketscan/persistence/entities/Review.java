@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SELLER_REVIEW", schema = "MARKET_SCAN")
-public class SellerReview extends IdEntity {
+public class Review extends IdEntity {
 	
 	@Column(name = "respectful", nullable = false)
 	private boolean isRrespectful;
@@ -37,10 +37,10 @@ public class SellerReview extends IdEntity {
 	@JoinColumn(name = "reviewer_id", nullable = false)
 	private Person reviewer;
 	
-	public SellerReview() {
+	public Review() {
 	}
 	
-	public SellerReview(boolean isRrespectful, boolean wasQualityOk, boolean wasQuantityOk, boolean isRecommended, int overallRating, String reviewComment, Person seller, Person reviewer) {
+	public Review(boolean isRrespectful, boolean wasQualityOk, boolean wasQuantityOk, boolean isRecommended, int overallRating, String reviewComment, Person seller, Person reviewer) {
 		this.isRrespectful = isRrespectful;
 		this.wasQualityOk = wasQualityOk;
 		this.wasQuantityOk = wasQuantityOk;

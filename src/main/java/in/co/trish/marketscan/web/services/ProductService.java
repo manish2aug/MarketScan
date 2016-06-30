@@ -9,5 +9,7 @@ public interface ProductService {
 	
 	List<Product> findMatchingProductsInCity(String searchString, City city);
 
-	Product findById(int productId);
+	Product find(int productId);
+
+	Product add(Product product);
 }

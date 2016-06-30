@@ -65,7 +65,7 @@ public class OfferRestController {
 		offerAssembler.userLatitude = latitude;
 		offerAssembler.userLongitude = longitude;
 		
-		Product product = productService.findById(productId);
+		Product product = productService.find(productId);
 		
 		Collection<Offer> offers = offerService.retrieveBestOffersInMarket(product);
 		List<OfferReadResource> offerComparisonResources = offerAssembler.toResources(offers);

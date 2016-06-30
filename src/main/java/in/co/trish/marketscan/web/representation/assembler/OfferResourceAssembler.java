@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import in.co.trish.marketscan.application.MarketScanUtils;
 import in.co.trish.marketscan.persistence.entities.Offer;
 import in.co.trish.marketscan.persistence.entities.Person;
-import in.co.trish.marketscan.persistence.entities.SellerReview;
+import in.co.trish.marketscan.persistence.entities.Review;
 import in.co.trish.marketscan.web.controllers.OfferRestController;
 import in.co.trish.marketscan.web.representation.read.OfferReadResource;
 
@@ -49,9 +49,9 @@ public class OfferResourceAssembler extends ResourceAssemblerSupport<Offer, Offe
 	}
 
 	private int retrieveRating(Offer offer) {
-		Collection<SellerReview> reviews = offer.getSeller().getReviews();
+		Collection<Review> reviews = offer.getSeller().getReviews();
 		int rating = 0;
-		for (SellerReview sellerReview : reviews) {
+		for (Review sellerReview : reviews) {
 			rating =rating + sellerReview.getOverallRating();
 		}
 		if(reviews.size() == 0)

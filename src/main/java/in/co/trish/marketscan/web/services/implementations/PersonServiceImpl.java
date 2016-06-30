@@ -1,5 +1,8 @@
 package in.co.trish.marketscan.web.services.implementations;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,22 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public Person save(Person person) {
 		return repository.save(person);		
+	}
+	
+	@Override
+	public List<Person> findAll() {
+		return repository.findAll();		
+	}
+	
+	@Override
+	public Person find(int id) {
+		return repository.getOne(id);
+	}
+
+	@Override
+	public Collection<Person> findAllSellers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
