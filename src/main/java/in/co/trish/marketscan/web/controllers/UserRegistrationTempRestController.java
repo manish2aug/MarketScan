@@ -3,6 +3,8 @@ package in.co.trish.marketscan.web.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +36,10 @@ public class UserRegistrationTempRestController {
 			@ApiResponse(code = 200, message = "successful response"),
 			@ApiResponse(code = 400, message = "Mobile no length is not 10"),
 			@ApiResponse(code = 500, message = "Something went wrong!") })
-	public ResponseEntity<UserRegistrationTempResource> sendOtp(@PathVariable("apiKey") String apiKey,
-			@PathVariable("mobileNo") String mobileNo) throws InterruptedException {
+	public ResponseEntity<UserRegistrationTempResource> sendOtp(
+			@PathVariable("apiKey") String apiKey,
+			@PathVariable("mobileNo") @NotNull String mobileNo
+			) throws InterruptedException {
 
 		UserRegistrationTempResource res = null;
 		if (!apiKey.equals("122333")) {

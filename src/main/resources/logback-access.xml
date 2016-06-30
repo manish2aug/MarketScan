@@ -4,15 +4,21 @@
 
 	<appender name="http"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http.log</file>
+		<file>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http.log
+		</file>
+
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>market-scan-http.%d{yyyy-MM-dd}.log.zip
+			<fileNamePattern>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http_%d{dd-MMM-yyyy}.%i.log
 			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%n%fullRequest%n%fullResponse%n</pattern>
 		</encoder>
 	</appender>
-		<appender-ref ref="http" />
+	<appender-ref ref="http" />
 
 </configuration>

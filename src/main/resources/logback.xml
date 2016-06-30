@@ -31,9 +31,10 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<pattern>
-				%d{HH:mm:ss.SSS} [%thread] [%-5level]: [%logger{0}] - %msg%n
-			</pattern>
+			<!-- <pattern>
+				|%X{req.xForwardedFor}| %d{HH:mm:ss.SSS} [%thread] [%-5level]: [%logger{0}] - %msg%n
+			</pattern> -->
+			<pattern>%d [%thread] [%5p] %50.50c{50}:%3L - %m%n</pattern>
 		</layout>
 	</appender>
 	<logger level="debug" additivity="false" name="in.co.trish.marketscan">
