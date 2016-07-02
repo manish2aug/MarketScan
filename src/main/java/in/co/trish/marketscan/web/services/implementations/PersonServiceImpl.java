@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Person;
+import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.persistence.repositories.PersonRepository;
 import in.co.trish.marketscan.web.services.PersonService;
 
@@ -38,6 +40,42 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public Collection<Person> findAllSellers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person saveSeller(City city, Person person) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Person updateSeller(City city, Person person) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Person> FindAllSeller(City city) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Person> FindAllSellerByPinCode(String pinCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Person> FindAllPersonsWhoSearchedFor(City city, Product product) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<Person> FindAllSellersByProduct(City city, Product product) {
 		// TODO Auto-generated method stub
 		return null;
 	}
