@@ -1,37 +1,64 @@
 package in.co.trish.marketscan.web.services;
 
 import java.util.Collection;
-import java.util.List;
 
 import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Person;
 import in.co.trish.marketscan.persistence.entities.Product;
+import in.co.trish.marketscan.persistence.entities.Role;
 
 public interface PersonService {
 	
-	// Add a new seller
-	Person saveSeller(City city, Person person);
+	/**
+	 * Add a new user (Buyer\Seller)
+	 * 
+	 * @param city - City in which user needs to be created
+	 * @param person - person pay-load
+	 * @return Newly added person
+	 */
+	Person save(City city, Person person);
 
-	// Update a new seller
-	Person updateSeller(City city, Person person);
+	/**
+	 * Update an user (Buyer\Seller)
+	 * 
+	 * @param city - City, the user belongs to
+	 * @param person - person pay-load with updated information
+	 * @return updated person 
+	 */
+	Person update(City city, Person person);
 	
-	// Find all sellers in a city
-	Collection<Person> FindAllSeller(City city);
+	/**
+	 * Find all persons in a city
+	 * 
+	 * @param city - City, the user belongs to
+	 * @return 
+	 */
+	Collection<Person> FindAllPersons(City city, Role role);
 	
-	// Find all sellers by pin code
-	Collection<Person> FindAllSellerByPinCode(String pinCode);
-	
-	// Find all persons who searched a particular item in a city
+	/**
+	 * Find all persons who searched a particular product in a city
+	 * 
+	 * @param city
+	 * @param product
+	 * @return
+	 */
 	Collection<Person> FindAllPersonsWhoSearchedFor(City city, Product product);
 	
-	// Find all sellers who are selling a particular item in a city
+	/**
+	 * Find all sellers who are selling a particular item in a city
+	 * 
+	 * @param city
+	 * @param product
+	 * @return
+	 */
 	Collection<Person> FindAllSellersByProduct(City city, Product product);
 	
-	Person save(Person person);
-
-	Person find(int id);
-
-	List<Person> findAll();
-
-	Collection<Person> findAllSellers();
+	/**
+	 * Find any user
+	 * 
+	 * @param city
+	 * @return
+	 */
+	Person FindPerson(int id);
+	
 }

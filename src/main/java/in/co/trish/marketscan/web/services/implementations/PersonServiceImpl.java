@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Person;
 import in.co.trish.marketscan.persistence.entities.Product;
+import in.co.trish.marketscan.persistence.entities.Role;
 import in.co.trish.marketscan.persistence.repositories.PersonRepository;
 import in.co.trish.marketscan.web.services.PersonService;
 
@@ -17,55 +18,28 @@ import in.co.trish.marketscan.web.services.PersonService;
 @Transactional
 public class PersonServiceImpl implements PersonService {
 
-	// for saving item using auto generated no, eg. counter.incrementAndGet()
-	// private static final AtomicLong counter = new AtomicLong();
-
 	@Autowired
 	private PersonRepository repository;
 
 	@Override
-	public Person save(Person person) {
-		return repository.save(person);		
-	}
-	
-	@Override
-	public List<Person> findAll() {
+	public List<Person> FindAllPersons(City city, Role role) {
 		return repository.findAll();		
 	}
 	
 	@Override
-	public Person find(int id) {
+	public Person FindPerson(int id) {
 		return repository.getOne(id);
 	}
 
 	@Override
-	public Collection<Person> findAllSellers() {
-		// TODO Auto-generated method stub
-		return null;
+	public Person save(City city, Person person) {
+		person.setCity(city);
+		return repository.save(person);		
 	}
-
+	
 	@Override
-	public Person saveSeller(City city, Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Person updateSeller(City city, Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Person> FindAllSeller(City city) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Collection<Person> FindAllSellerByPinCode(String pinCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public Person update(City city, Person person) {
+		return repository.save(person);		
 	}
 
 	@Override
@@ -79,5 +53,5 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }
