@@ -11,21 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
-import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "PERSON", schema = "MARKET_SCAN")
-@TypeDefs(value = {@TypeDef(name = "pgInet", typeClass = PgInetType.class), @TypeDef(name = "PgMacAddr", typeClass = PgMacAddreType.class)})
 public class Person extends IdEntity {
 	
-	@NotNull
-    @Size(max=4)
 	@Column(name = "full_name", nullable = false, length = 100)
 	private String fullName;
 	
@@ -39,12 +29,10 @@ public class Person extends IdEntity {
 	private String uuid;
 	
 	@Column(name = "mac_address", nullable = true)
-	@Type(type = "PgMacAddr")
-	private PgMacAddr macAddress = new PgMacAddr("00:00:00:00:00:00");
-	@Email
+	private String macAddress;
+
 	@Column(name = "ip_address", nullable = true)
-	@Type(type = "pgInet")
-	private PgInet ipAddress;
+	private String ipAddress;
 	
 	@Column(name = "device_id", nullable = true, length = 50)
 	private String deviceId;
@@ -120,7 +108,7 @@ public class Person extends IdEntity {
 	public Person() {
 	}
 	
-	public Person(String fullName, String userName, String password, String uuid, PgMacAddr macAddress, PgInet ipAddress, String deviceId, String shopName, String mobileNo, String landlineNo, String whatsappNo, String emailAddress, String physicalAddressLine1, String physicalAddressLine2, String landmark, String town, String locality, String subLocality, String pinCode, double longitude, double lattitude, Date lastLoginDate, String lastActivity, boolean isDeliveryAvailable, Date registrationDate, Role role, City city, DealAccount dealAccount, Collection<Review> reviews) {
+	public Person(String fullName, String userName, String password, String uuid, String macAddress, String ipAddress, String deviceId, String shopName, String mobileNo, String landlineNo, String whatsappNo, String emailAddress, String physicalAddressLine1, String physicalAddressLine2, String landmark, String town, String locality, String subLocality, String pinCode, double longitude, double lattitude, Date lastLoginDate, String lastActivity, boolean isDeliveryAvailable, Date registrationDate, Role role, City city, DealAccount dealAccount, Collection<Review> reviews) {
 		super();
 		this.fullName = fullName;
 		this.userName = userName;
@@ -192,22 +180,19 @@ public class Person extends IdEntity {
 		this.uuid = uuid;
 	}
 	
-	public PgMacAddr getMacAddress() {
+	public String getMacAddress() {
 		return macAddress;
 	}
 	
-	public void setMacAddress(PgMacAddr macAddress) {
-		if (macAddress ==  null){
-			this.macAddress = new PgMacAddr("00:00:00:00:00:00");
-		}
+	public void setMacAddress(String macAddress) {
 		this.macAddress = macAddress;
 	}
 	
-	public PgInet getIpAddress() {
+	public String getIpAddress() {
 		return ipAddress;
 	}
 	
-	public void setIpAddress(PgInet ipAddress) {
+	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
 	

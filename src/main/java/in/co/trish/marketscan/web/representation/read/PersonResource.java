@@ -10,11 +10,10 @@ public class PersonResource extends ResourceSupport {
 
 	public PersonResource(Person person) {
 		this.person = person;
-		// this.add(new Link(person.getUri(), "bookmark-uri"));
-		// this.add(linkTo(BookmarkRestController.class,
-		// username).withRel("bookmarks"));
-		// this.add(linkTo(methodOn(BookmarkRestController.class,
-		// username).readBookmark(username, person.getId())).withSelfRel());
+//		 this.add(new Link(person.getUri(), "person-uri"));
+		// this.add(linkTo(PersonRestController.class,
+		// username).withRel("persons"));
+		// this.add(linkTo(methodOn(BookmarkRestController.class,username).readBookmark(username, person.getId())).withSelfRel());
 	}
 
 }
