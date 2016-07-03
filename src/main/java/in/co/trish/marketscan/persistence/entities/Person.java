@@ -11,77 +11,100 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "PERSON", schema = "MARKET_SCAN")
 public class Person extends IdEntity {
 	
+	@NotNull
+	@Size(max=100)
 	@Column(name = "full_name", nullable = false, length = 100)
 	private String fullName;
 	
+	@Size(max=20)
 	@Column(name = "user_name", nullable = true, length = 20)
 	private String userName;
 	
+	@Size(max=20)
 	@Column(name = "password", nullable = true, length = 20)
 	private String password;
 	
+	@Size(max=50)
 	@Column(name = "uuid", nullable = true, length = 50)
 	private String uuid;
 	
-	@Column(name = "mac_address", nullable = true)
+	@Size(max=17)
+	@Column(name = "mac_address", nullable = true, length = 17)
 	private String macAddress;
 
-	@Column(name = "ip_address", nullable = true)
+	@Size(max=15)
+	@Column(name = "ip_address", nullable = true, length = 15)
 	private String ipAddress;
 	
+	@Size(max=50)
 	@Column(name = "device_id", nullable = true, length = 50)
 	private String deviceId;
 	
+	@Size(max=100)
 	@Column(name = "shop_name", nullable = true, length = 100)
 	private String shopName;
 	
+	@Size(max=100)
 	@Column(name = "mobile_no", nullable = true, length = 10)
 	private String mobileNo;
 	
+	@Size(max=10)
 	@Column(name = "landline_no", nullable = true, length = 20)
 	private String landlineNo;
 	
+	@Size(max=10)
 	@Column(name = "whatsapp_no", nullable = true, length = 10)
 	private String whatsappNo;
 	
+	@Size(max=150)
 	@Column(name = "email_address", nullable = true, length = 150)
 	private String emailAddress;
 	
+	@Size(max=150)
 	@Column(name = "physical_address_line1", nullable = true, length = 150)
 	private String physicalAddressLine1;
 	
+	@Size(max=150)
 	@Column(name = "physical_address_line2", nullable = true, length = 150)
 	private String physicalAddressLine2;
 	
+	@Size(max=150)
 	@Column(name = "landmark", nullable = true, length = 150)
 	private String landmark;
 	
+	@Size(max=100)
 	@Column(name = "town", nullable = true, length = 100)
 	private String town;
 	
+	@Size(max=100)
 	@Column(name = "locality", nullable = true, length = 100)
 	private String locality;
 	
+	@Size(max=100)
 	@Column(name = "sub_locality", nullable = true, length = 100)
 	private String subLocality;
 	
+	@Size(max=6)
 	@Column(name = "pin_code", nullable = true, length = 6)
 	private String pinCode;
 	
-	@Column(name = "longitude", nullable = false, length = 100)
+	@Column(name = "longitude", nullable = false, length = 20)
 	private double longitude;;
 	
 	@Column(name = "lattitude", nullable = false, length = 20)
 	private double lattitude;
 	
-	@Column(name = "last_login_date", nullable = true, length = 100)
+	@Column(name = "last_login_date", nullable = true)
 	private Date lastLoginDate;
 	
+	@Size(max=100)
 	@Column(name = "last_activity", nullable = true, length = 100)
 	private String lastActivity;
 	

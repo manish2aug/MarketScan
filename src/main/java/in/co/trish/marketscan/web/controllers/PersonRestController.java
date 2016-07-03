@@ -2,6 +2,8 @@ package in.co.trish.marketscan.web.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class PersonRestController {
 	@RequestMapping(method = RequestMethod.POST, produces = {"application/json"}, consumes="application/json")
 	@ApiOperation(value = "Registers a person", notes = "would return a payload stating the transaction status")
 	@ApiResponses(value = {@ApiResponse(code = 201, message = "successful response"), @ApiResponse(code = 500, message = "Something went wrong!")})
-	public ResponseEntity<Void> register(@PathVariable("cityCode") String cityCode, @RequestBody(required = true) Person personPayload, @RequestParam(required = true) @ApiParam(value = "Is this a seller?", required = true, defaultValue = "false", allowableValues = "true, false", example = "true") boolean isSeller) {
+	public ResponseEntity<Void> register(@PathVariable("cityCode") String cityCode, @RequestBody(required = true) @Valid Person personPayload, @RequestParam(required = true) @ApiParam(value = "Is this a seller?", required = true, defaultValue = "false", allowableValues = "true, false", example = "true") boolean isSeller) {
 		
 		logger.debug("create person method called");
 		

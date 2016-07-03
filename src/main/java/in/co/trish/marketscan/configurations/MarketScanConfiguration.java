@@ -21,45 +21,52 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import in.co.trish.marketscan.configurations.persistence.MarketScanPersistenceConfiguration;
 import in.co.trish.marketscan.configurations.swagger.MarketScanSwaggerConfiguration;
 import in.co.trish.marketscan.configurations.web.MarketScanWebConfigurations;
+import in.co.trish.marketscan.web.exception.MarketScanExceptionMessage;
 
 @Configuration
-@ComponentScan(basePackages = { "co.in.trish.marketscan" }, excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = { "co.in.trish.marketscan.web.filters.*" }))
+@ComponentScan(basePackages = {
+		"co.in.trish.marketscan" }, excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = {
+				"co.in.trish.marketscan.web.filters.*" }))
 @PropertySource(value = { "classpath:application.properties" })
 @EnableScheduling
 @EnableAspectJAutoProxy
 @EnableCaching
-@Import({MarketScanSwaggerConfiguration.class, MarketScanPersistenceConfiguration.class, MarketScanWebConfigurations.class})
+@Import({ MarketScanSwaggerConfiguration.class, MarketScanPersistenceConfiguration.class,
+		MarketScanWebConfigurations.class })
 public class MarketScanConfiguration {
 
-    @Autowired
-    private Environment env;
+	@Autowired
+	private Environment env;
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
-	return new PropertySourcesPlaceholderConfigurer();
-    }
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 
-    @Bean
-    public CacheManager cacheManager() {
-	return new ConcurrentMapCacheManager();
-    }
+	@Bean
+	public CacheManager cacheManager() {
+		return new ConcurrentMapCacheManager();
+	}
 
-    @Bean
-    public JavaMailSenderImpl javaMailSenderImpl() {
-	JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();
-	mailSenderImpl.setHost(env.getProperty("smtp.host"));
-	mailSenderImpl.setPort(env.getProperty("smtp.port", Integer.class));
-	mailSenderImpl.setProtocol(env.getProperty("smtp.protocol"));
-	mailSenderImpl.setUsername(env.getProperty("smtp.username"));
-	mailSenderImpl.setPassword(env.getProperty("smtp.password"));
+	@Bean
+	public JavaMailSenderImpl javaMailSenderImpl() {
+		JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();
+		mailSenderImpl.setHost(env.getProperty("smtp.host"));
+		mailSenderImpl.setPort(env.getProperty("smtp.port", Integer.class));
+		mailSenderImpl.setProtocol(env.getProperty("smtp.protocol"));
+		mailSenderImpl.setUsername(env.getProperty("smtp.username"));
+		mailSenderImpl.setPassword(env.getProperty("smtp.password"));
 
-	Properties javaMailProps = new Properties();
-	javaMailProps.put("mail.smtp.auth", true);
-	javaMailProps.put("mail.smtp.starttls.enable", true);
+		Properties javaMailProps = new Properties();
+		javaMailProps.put("mail.smtp.auth", true);
+		javaMailProps.put("mail.smtp.starttls.enable", true);
+		mailSenderImpl.setJavaMailProperties(javaMailProps);
 
-	mailSenderImpl.setJavaMailProperties(javaMailProps);
+		return mailSenderImpl;
+	}
 
-	return mailSenderImpl;
-    }
-
+	@Bean
+	public MarketScanExceptionMessage httpResponse(){
+		return new MarketScanExceptionMessage();
+	}
 }
