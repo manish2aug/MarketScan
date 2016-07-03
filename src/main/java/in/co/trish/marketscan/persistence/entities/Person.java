@@ -11,18 +11,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "PERSON", schema = "MARKET_SCAN")
 @TypeDefs(value = {@TypeDef(name = "pgInet", typeClass = PgInetType.class), @TypeDef(name = "PgMacAddr", typeClass = PgMacAddreType.class)})
 public class Person extends IdEntity {
 	
+	@NotNull
+    @Size(max=4)
 	@Column(name = "full_name", nullable = false, length = 100)
 	private String fullName;
 	
@@ -37,9 +40,8 @@ public class Person extends IdEntity {
 	
 	@Column(name = "mac_address", nullable = true)
 	@Type(type = "PgMacAddr")
-	@JsonProperty(defaultValue="00:00:00:00:00:00")
-	private PgMacAddr macAddress;
-	
+	private PgMacAddr macAddress = new PgMacAddr("00:00:00:00:00:00");
+	@Email
 	@Column(name = "ip_address", nullable = true)
 	@Type(type = "pgInet")
 	private PgInet ipAddress;
