@@ -32,8 +32,7 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
 
 		pathParameters.add(productId);
 		// add link to price comparison
-		representation.add(ControllerLinkBuilder.linkTo(OfferRestController.class, pathParameters.toArray())
-				.withRel("offers"));
+		representation.add(ControllerLinkBuilder.linkTo(OfferRestController.class, pathParameters.toArray()).withRel("offers"));
 
 		return representation;
 	}

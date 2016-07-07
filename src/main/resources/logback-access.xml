@@ -2,23 +2,29 @@
 <configuration>
 	<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 
-	<appender name="http"
+	<appender name="http_logs"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http.log
+		<!-- <file>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http.log
+		</file> -->
+		<file>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http.html
 		</file>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http_%d{dd-MMM-yyyy}.%i.log
-			</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy	class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+			<!-- <fileNamePattern>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http_%d{dd-MMM-yyyy}.%i.log</fileNamePattern> -->
+			<fileNamePattern>D:/Development_DoNotDelete/MarketScan/logs/market-scan-http_%d{dd-MMM-yyyy}_%i.html</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>5MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%n%fullRequest%n%fullResponse%n</pattern>
+		</rollingPolicy> 
+		<!-- <encoder> <pattern>%n%fullRequest%n%fullResponse%n</pattern> </encoder> -->
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.access.html.HTMLLayout">
+				<pattern>%t{ISO8601}%a%r%q%s%D%header</pattern>
+			</layout>
 		</encoder>
 	</appender>
-	<appender-ref ref="http" />
+	<appender-ref ref="http_logs" />
 
 </configuration>

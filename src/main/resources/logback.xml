@@ -32,10 +32,7 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<!-- <pattern>
-				|%X{req.xForwardedFor}| %d{HH:mm:ss.SSS} [%thread] [%-5level]: [%logger{0}] - %msg%n
-			</pattern> -->
-			<pattern>%d [%thread] [%5p] %50.50c{50}:%3L - %m%n</pattern>
+			<pattern>%d{ISO8601} [%t] [%5p] %50.50c{50}:%3L - %m%n</pattern>
 		</layout>
 	</appender>
 	<logger level="debug" additivity="false" name="in.co.trish.marketscan">
@@ -43,45 +40,59 @@
 	</logger>
 
 	<!-- *************************************************************** -->
-	<appender name="springwebfile" class="ch.qos.logback.core.FileAppender">
-		<file>${log.dir}/spring-web.log</file>
-		<append>false</append>
-		<encoder>
-			<pattern>[%.-5level] %msg%n%n</pattern>
-		</encoder>
+	<appender name="spring_logs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.dir}/market-scan-spring.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.dir}/market-scan-spring_%d{dd-MMM-yyyy}_%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{ISO8601} [%t] [%5p] %50.50c{50}:%3L - %m%n</pattern>
+		</layout>
 	</appender>
-	<logger name="org.springframework.web" additivity="false" level="trace">
-		<appender-ref ref="springwebfile" />
+	<logger name="org.springframework.web" additivity="false" level="debug">
+		<appender-ref ref="spring_logs" />
 	</logger>
 
 	<!-- *************************************************************** -->
-	<appender name="hibernatefile" class="ch.qos.logback.core.FileAppender">
-		<file>${log.dir}/hibernate.log</file>
-		<append>false</append>
-		<encoder>
-			<pattern>%d{HH:mm}|%.-1level|%-40.40logger{0}|%msg%n</pattern>
-		</encoder>
+	<appender name="hibernate_logs" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.dir}/market-scan-hibernate.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.dir}/market-scan-hibernate_%d{dd-MMM-yyyy}_%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{ISO8601} [%t] [%5p] %50.50c{50}:%3L - %m%n</pattern>
+		</layout>
 	</appender>
 	<logger name="org.hibernate" additivity="false" level="debug">
-		<appender-ref ref="hibernatefile" />
+		<appender-ref ref="hibernate_logs" />
 	</logger>
 	<logger name="org.springframework.orm" additivity="false" level="debug">
-		<appender-ref ref="hibernatefile" />
+		<appender-ref ref="hibernate_logs" />
 	</logger>
 	<logger name="org.springframework.dao" additivity="false" level="debug">
-		<appender-ref ref="hibernatefile" />
+		<appender-ref ref="hibernate_logs" />
 	</logger>
 	<logger name="org.springframework.data" additivity="false"
 		level="debug">
-		<appender-ref ref="hibernatefile" />
+		<appender-ref ref="hibernate_logs" />
 	</logger>
 	<logger name="org.springframework.jdbc" additivity="false"
 		level="debug">
-		<appender-ref ref="hibernatefile" />
+		<appender-ref ref="hibernate_logs" />
 	</logger>
 	<logger name="org.springframework.transaction" additivity="false"
 		level="debug">
-		<appender-ref ref="hibernatefile" />
+		<appender-ref ref="hibernate_logs" />
 	</logger>
 
 	<root level="warn">
