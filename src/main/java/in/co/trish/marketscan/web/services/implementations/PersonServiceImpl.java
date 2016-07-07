@@ -12,6 +12,7 @@ import in.co.trish.marketscan.persistence.entities.Person;
 import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.persistence.entities.Role;
 import in.co.trish.marketscan.persistence.repositories.PersonRepository;
+import in.co.trish.marketscan.web.exception.MarketScanBadRequestException;
 import in.co.trish.marketscan.web.services.PersonService;
 
 @Service("personService")
@@ -23,9 +24,9 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<Person> FindAllPersons(City city, Role role) {
-		return repository.findAll();		
+		return repository.findAll();
 	}
-	
+
 	@Override
 	public Person FindPerson(int id) {
 		return repository.getOne(id);
@@ -34,12 +35,15 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public Person save(City city, Person person) {
 		person.setCity(city);
-		return repository.save(person);		
+		return repository.save(person);
 	}
-	
+
 	@Override
 	public Person update(City city, Person person) {
-		return repository.save(person);		
+		if (person.getId() == null) {
+			throw new MarketScanBadRequestException("");
+		}
+		return save(city, person);
 	}
 
 	@Override

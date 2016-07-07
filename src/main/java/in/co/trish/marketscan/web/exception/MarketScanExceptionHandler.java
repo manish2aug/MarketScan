@@ -30,13 +30,23 @@ public class MarketScanExceptionHandler extends ResponseEntityExceptionHandler {
 	}*/
 
 	@ExceptionHandler(MarketScanMethodNotAllowedException.class)
-	ResponseEntity<Object> handleBadRequest(RuntimeException ex, WebRequest request) {
-		return getErrorResponseEntity(ex, "Invalid method", HttpStatus.BAD_REQUEST, request);
+	ResponseEntity<Object> handleMarketScanMethodNotAllowedException(RuntimeException ex, WebRequest request) {
+		return getErrorResponseEntity(ex, HttpStatusCodeMessage.METHOD_NOT_ALLOWED, request);
+	}
+	
+	@ExceptionHandler(MarketScanBadRequestException.class)
+	ResponseEntity<Object> handleMarketScanBadRequestException(RuntimeException ex, WebRequest request) {
+		return getErrorResponseEntity(ex, HttpStatusCodeMessage.BAD_REQUEST, request);
+	}
+	
+	@ExceptionHandler(MarketScanInternalServerErrorException.class)
+	ResponseEntity<Object> handleMarketScanInternalServerErrorException(RuntimeException ex, WebRequest request) {
+		return getErrorResponseEntity(ex, HttpStatusCodeMessage.BAD_REQUEST, request);
 	}
 	
 	@ExceptionHandler(Exception.class)
 	ResponseEntity<Object> handleGenericException(RuntimeException ex, WebRequest request) {
-		return getErrorResponseEntity(ex, "Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR, request);
+		return getErrorResponseEntity(ex, HttpStatusCodeMessage.INTERNAL_SERVER_ERROR, request);
 	}
 
 	private HttpHeaders getHeaders() {
@@ -45,16 +55,16 @@ public class MarketScanExceptionHandler extends ResponseEntityExceptionHandler {
 		return headers;
 	}
 
-	private ResponseEntity<Object> getErrorResponseEntity(Exception ex, String clientMessage, HttpStatus httpStatus,
-			WebRequest request) {
-		logger.error("Exception captured", ex);
-		httpResponse.setError(clientMessage);
-		return handleExceptionInternal(ex, httpResponse, getHeaders(), httpStatus, request);
-	}
-
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		return getErrorResponseEntity(ex, "Invalid input provided", HttpStatus.BAD_REQUEST, request);
+		return getErrorResponseEntity(ex, HttpStatusCodeMessage.BAD_REQUEST, request);
 	}
+	
+	private ResponseEntity<Object> getErrorResponseEntity(Exception ex, HttpStatusCodeMessage httpStatusCodeMessage, WebRequest request) {
+		logger.error("Exception captured", ex);
+		httpResponse.setError(httpStatusCodeMessage.message());
+		return handleExceptionInternal(ex, httpResponse, getHeaders(), httpStatusCodeMessage.httpStatus(), request);
+	}
+	
 }
