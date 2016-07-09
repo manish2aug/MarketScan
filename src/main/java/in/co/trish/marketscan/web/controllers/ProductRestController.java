@@ -2,16 +2,22 @@ package in.co.trish.marketscan.web.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import in.co.trish.marketscan.application.MarketScanApplicationConstants;
 import in.co.trish.marketscan.persistence.entities.City;
@@ -36,7 +42,7 @@ import io.swagger.annotations.ResponseHeader;
 				protocols="http")
 public class ProductRestController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ProductRestController.class);
+	private static final Logger log = LoggerFactory.getLogger(ProductRestController.class);
 	
 	@Autowired
 	ProductService productService;
@@ -77,13 +83,28 @@ public class ProductRestController {
 		}
 
 		List<ProductResource> resourceList = assembler.toResources(products);
-		logger.debug("CIty code: ",cityCode);
-		logger.trace("Hello World!");
-		logger.debug("How are you today?");
-		logger.info("I am fine.");
-		logger.warn("I love programming.");
-		logger.error("I am programming.");
 		return new ResponseEntity<List<ProductResource>>(resourceList, HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes={MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 })
+	@ApiOperation(value = "Save a product", notes = "would return a payload stating the transaction status")
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "successful response"), @ApiResponse(code = 500, message = "Something went wrong!")})
+	private ResponseEntity<Void> register(@PathVariable("cityCode") String cityCode, @RequestBody(required = true) @Valid Product productPayload) {
+		
+		log.debug("create person method called");
+		// provide all path parameters
+		Product product = productService.add(cityService.findByCode(cityCode), productPayload);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(product.getId()).toUri());
+		
+		// TODO: Implement like https://spring.io/guides/tutorials/bookmarks/
+		//		HttpHeaders httpHeaders = new HttpHeaders();
+		//        Link forOneBookmark = new PersonResource(person).getLink("self");
+		//        httpHeaders.setLocation(URI.create(forOneBookmark.getHref()));
+		
+//		return new ResponseEntity<Void>(httpHeaders, HttpStatus.CREATED);
+		return null;
+	}
+	
 }

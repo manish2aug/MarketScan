@@ -16,7 +16,7 @@ public class MarketScanUtils {
 	}
 
 	public static boolean isValidMacAddress(String s){
-		Pattern pattern = Pattern.compile("^([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}$|^([a-fA-F0-9]{4}[.]){2}[a-fA-F0-9]{4}$");
+		Pattern pattern = Pattern.compile(MarketScanApplicationConstants.PATTERN_VALID_MAC_ADDRESS);
 	    return pattern.matcher(s).matches();
 	}
 	

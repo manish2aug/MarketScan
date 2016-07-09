@@ -8,4 +8,7 @@ public class MarketScanApplicationConstants {
 	public static final String BAD_REQUEST = "Request is not valid, please check again!";
 	public static final String METHOD_NOT_ALLOWED = "Requested service not exposed!";
 	public static final String INTERNAL_SERVER_ERROR = "Server is unable to process the request due to some internal error!";
+	
+	public static final String PATTERN_VALID_MAC_ADDRESS = "^([a-fA-F0-9]{2}[:-]){5}[a-fA-F0-9]{2}$|^([a-fA-F0-9]{4}[.]){2}[a-fA-F0-9]{4}$";
+
 }

@@ -32,7 +32,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public Product add(Product product) {
+	public Product add(City city, Product product) {
+		product.setCity(city);
 		return repository.saveAndFlush(product);
 	}
 	
