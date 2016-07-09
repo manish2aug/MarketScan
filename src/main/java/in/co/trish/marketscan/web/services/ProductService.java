@@ -11,5 +11,5 @@ public interface ProductService {
 
 	Product find(int productId);
 
-	Product add(City city, Product product);
+	Product addProduct(String cityCode, Product product);
 }

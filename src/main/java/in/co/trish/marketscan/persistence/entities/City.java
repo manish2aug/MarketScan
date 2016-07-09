@@ -9,14 +9,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "CITY", schema = "MARKET_SCAN")
 public class City extends IdEntity {
 	
+	@NotNull
+	@NotEmpty
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 	
+	@NotNull
+	@NotEmpty
 	@Column(name = "code", nullable = false, length = 30, unique = true)
 	private String code;
 	

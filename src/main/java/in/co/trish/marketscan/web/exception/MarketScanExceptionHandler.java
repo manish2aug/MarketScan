@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import in.co.trish.marketscan.web.MarketScanResponseMessage;
+
 @ControllerAdvice
 public class MarketScanExceptionHandler extends ResponseEntityExceptionHandler {
 
 	protected static final Logger logger = LoggerFactory.getLogger(MarketScanExceptionHandler.class);;
 
 	@Autowired
-	MarketScanExceptionMessage httpResponse;
+	MarketScanResponseMessage response;
 
 	/*@ExceptionHandler(Exception.class)
 	ResponseEntity<Object> handleApplicationException(Exception ex, WebRequest request) {
@@ -63,8 +65,9 @@ public class MarketScanExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	private ResponseEntity<Object> getErrorResponseEntity(Exception ex, HttpStatusCodeMessage httpStatusCodeMessage, WebRequest request) {
 		logger.error("Exception captured", ex);
-		httpResponse.setError(httpStatusCodeMessage.message());
-		return handleExceptionInternal(ex, httpResponse, getHeaders(), httpStatusCodeMessage.httpStatus(), request);
+		response.setStatus("Error");
+		response.setDetail(httpStatusCodeMessage.message());
+		return handleExceptionInternal(ex, response, getHeaders(), httpStatusCodeMessage.httpStatus(), request);
 	}
 	
 }

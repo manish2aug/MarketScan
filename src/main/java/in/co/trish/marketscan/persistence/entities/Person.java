@@ -12,7 +12,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import in.co.trish.marketscan.application.MarketScanApplicationConstants;
 
 @Entity
 @Table(name = "PERSON", schema = "MARKET_SCAN")
@@ -36,10 +39,12 @@ public class Person extends IdEntity {
 	private String uuid;
 	
 	@Size(max=17)
+	@Pattern(regexp=MarketScanApplicationConstants.PATTERN_VALID_MAC_ADDRESS)
 	@Column(name = "mac_address", nullable = true, length = 17)
 	private String macAddress;
 
 	@Size(max=15)
+	@Pattern(regexp=MarketScanApplicationConstants.PATTERN_VALID_IP_ADDRESS)
 	@Column(name = "ip_address", nullable = true, length = 15)
 	private String ipAddress;
 	
@@ -64,6 +69,7 @@ public class Person extends IdEntity {
 	private String whatsappNo;
 	
 	@Size(max=150)
+	@Pattern(regexp=MarketScanApplicationConstants.PATTERN_VALID_EMAIL)
 	@Column(name = "email_address", nullable = true, length = 150)
 	private String emailAddress;
 	

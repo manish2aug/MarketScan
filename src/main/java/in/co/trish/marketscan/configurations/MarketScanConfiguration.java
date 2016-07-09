@@ -21,7 +21,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import in.co.trish.marketscan.configurations.persistence.MarketScanPersistenceConfiguration;
 import in.co.trish.marketscan.configurations.swagger.MarketScanSwaggerConfiguration;
 import in.co.trish.marketscan.configurations.web.MarketScanWebConfigurations;
-import in.co.trish.marketscan.web.exception.MarketScanExceptionMessage;
+import in.co.trish.marketscan.web.MarketScanResponseMessage;
 
 @Configuration
 @ComponentScan(basePackages = {
@@ -66,7 +66,7 @@ public class MarketScanConfiguration {
 	}
 
 	@Bean
-	public MarketScanExceptionMessage httpResponse(){
-		return new MarketScanExceptionMessage();
+	public MarketScanResponseMessage httpResponse(){
+		return new MarketScanResponseMessage();
 	}
 }

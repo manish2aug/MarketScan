@@ -1,5 +1,6 @@
 package in.co.trish.marketscan.persistence.entities;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,7 +10,8 @@ import javax.persistence.MappedSuperclass;
 public abstract class IdEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	protected Integer id;
 
 	public Integer getId() {

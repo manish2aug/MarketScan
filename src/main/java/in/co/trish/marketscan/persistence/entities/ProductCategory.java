@@ -7,14 +7,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "PRODUCT_CATEGORY", schema = "MARKET_SCAN")
 public class ProductCategory extends IdEntity {
 	
+	@NotNull
+	@NotEmpty
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 	
+	@NotNull
+	@NotEmpty
 	@Column(name = "code", nullable = false, length = 30)
 	private String code;
 	

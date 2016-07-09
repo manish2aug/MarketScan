@@ -3,14 +3,21 @@ package in.co.trish.marketscan.persistence.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "UNIT", schema = "MARKET_SCAN")
 public class Unit extends IdEntity {
 	
+	@NotNull
+	@NotEmpty
 	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 
+	@NotNull
+	@NotEmpty
 	@Column(name = "code", nullable = false, length = 10, unique = true)
 	private String code;
 	

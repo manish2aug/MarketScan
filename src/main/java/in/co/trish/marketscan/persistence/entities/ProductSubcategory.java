@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -12,10 +13,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "PRODUCT_SUBCATEGORY", schema = "MARKET_SCAN")
 public class ProductSubcategory extends IdEntity {
 
+	@NotNull
 	@NotEmpty
 	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 
+	@NotNull
+	@NotEmpty
 	@Column(name = "code", nullable = false, length = 50)
 	private String code;
 	

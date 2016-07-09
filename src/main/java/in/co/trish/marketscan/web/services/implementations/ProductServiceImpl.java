@@ -6,9 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import in.co.trish.marketscan.persistence.entities.Brand;
 import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Product;
+import in.co.trish.marketscan.persistence.entities.ProductSubcategory;
+import in.co.trish.marketscan.persistence.entities.Unit;
+import in.co.trish.marketscan.persistence.repositories.BrandRepository;
+import in.co.trish.marketscan.persistence.repositories.CityRepository;
 import in.co.trish.marketscan.persistence.repositories.ProductRepository;
+import in.co.trish.marketscan.persistence.repositories.ProductSubcategoryRepository;
+import in.co.trish.marketscan.persistence.repositories.UnitRepository;
 import in.co.trish.marketscan.web.services.ProductService;
 
 @Service("productService")
@@ -19,22 +26,47 @@ public class ProductServiceImpl implements ProductService {
 	// private static final AtomicLong counter = new AtomicLong();
 
 	@Autowired
-	private ProductRepository repository;
+	private ProductRepository productRepository;
 
+	@Autowired
+	private CityRepository cityRepository;
+	
+	@Autowired
+	private BrandRepository brandRepository;
+	
+	@Autowired
+	private ProductSubcategoryRepository productSubcategoryRepository;
+	
+	@Autowired
+	private UnitRepository unitRepository;
+	
 	@Override
 	public List<Product> findMatchingProductsInCity(String searchString, City city) {
-		return repository.findByNameIgnoreCaseContainingAndCity(searchString, city);
+		return productRepository.findByNameIgnoreCaseContainingAndCity(searchString, city);
 	}
 	
 	@Override
 	public Product find(int productId) {
-		return repository.findOne(productId);
+		return productRepository.findOne(productId);
 	}
 	
 	@Override
-	public Product add(City city, Product product) {
+	public Product addProduct(String cityCode, Product product) {
+		
+		// Add city
+		City city = cityRepository.findByCode(cityCode);
 		product.setCity(city);
-		return repository.saveAndFlush(product);
+		// Add brand
+		Brand brand = brandRepository.findByCode(product.getBrand().getCode());
+		product.setBrand(brand);
+		// Add product sub category
+		ProductSubcategory productSubcategory = productSubcategoryRepository.findByCode(product.getSubCategory().getCode());
+		product.setSubCategory(productSubcategory);
+		// Add unit
+		Unit unit = unitRepository.findByCode(product.getUnit().getCode());
+		product.setUnit(unit);
+		
+		return productRepository.saveAndFlush(product);
 	}
 	
 	

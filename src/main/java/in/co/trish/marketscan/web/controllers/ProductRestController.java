@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import in.co.trish.marketscan.application.MarketScanApplicationConstants;
 import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Product;
+import in.co.trish.marketscan.web.MarketScanResponseMessage;
 import in.co.trish.marketscan.web.representation.assembler.ProductResourceAssembler;
 import in.co.trish.marketscan.web.representation.read.ProductResource;
 import in.co.trish.marketscan.web.services.BrandService;
@@ -56,13 +57,13 @@ public class ProductRestController {
 	@Autowired
 	ProductResourceAssembler assembler;
 
-	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 },produces={"application/json"})
-	@ApiOperation(value = "Find available products matching with supplied identifier in user's current city", 
-					notes = "System would build a nice description of found product by combining brand and category",
-					response = Product.class, responseContainer = "List")
+	@Autowired
+	MarketScanResponseMessage response;
+	
+	@RequestMapping(method = RequestMethod.GET, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ApiOperation(value = "Find available products matching with supplied identifier in user's current city", notes = "System would build a nice description of found product by combining brand and category", response = Product.class, responseContainer = "List")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "JSON representation of collection of products including other accessible application states", 
-					responseHeaders = @ResponseHeader(name = "Content-Type", description = "application/vnd.market-scan.v1+json", response = String.class)), 
+			@ApiResponse(code = 200, message = "JSON representation of collection of products including other accessible application states", responseHeaders = @ResponseHeader(name = "Content-Type", description = MediaType.APPLICATION_JSON_VALUE, response = String.class)), 
 			@ApiResponse(code = 404, message = "No product found"), 
 			@ApiResponse(code = 500, message = "Something went wrong!"),
 			@ApiResponse(code = 415, message = "Unsupported media type")
@@ -86,25 +87,18 @@ public class ProductRestController {
 		return new ResponseEntity<List<ProductResource>>(resourceList, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes={MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1 })
-	@ApiOperation(value = "Save a product", notes = "would return a payload stating the transaction status")
+	@RequestMapping(method = RequestMethod.POST, consumes = {MarketScanApplicationConstants.ACCEPTED_CONTENT_TYPE_VERSION_1}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ApiOperation(value = "Adds new product", notes = "would return a payload stating the transaction status")
 	@ApiResponses(value = {@ApiResponse(code = 201, message = "successful response"), @ApiResponse(code = 500, message = "Something went wrong!")})
-	private ResponseEntity<Void> register(@PathVariable("cityCode") String cityCode, @RequestBody(required = true) @Valid Product productPayload) {
-		
-		log.debug("create person method called");
+	private ResponseEntity<MarketScanResponseMessage> saveProduct(@PathVariable("cityCode") String cityCode, @RequestBody(required = true) @Valid Product productPayload) {
+		log.debug("create product method called");
 		// provide all path parameters
-		Product product = productService.add(cityService.findByCode(cityCode), productPayload);
-		
+		Product product = productService.addProduct(cityCode, productPayload);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(product.getId()).toUri());
-		
-		// TODO: Implement like https://spring.io/guides/tutorials/bookmarks/
-		//		HttpHeaders httpHeaders = new HttpHeaders();
-		//        Link forOneBookmark = new PersonResource(person).getLink("self");
-		//        httpHeaders.setLocation(URI.create(forOneBookmark.getHref()));
-		
-//		return new ResponseEntity<Void>(httpHeaders, HttpStatus.CREATED);
-		return null;
+		response.setStatus("Success"); 
+		response.setDetail("Product created successfully!");
+		return new ResponseEntity<MarketScanResponseMessage>(response,httpHeaders, HttpStatus.CREATED);
 	}
 	
 }

@@ -6,25 +6,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModel;
 
 @ApiModel(value="Product", description="Product to be searched")
 @Entity
-@Table(name = "PRODUCT", schema = "MARKET_SCAN")
+@Table(
+		schema = "MARKET_SCAN",
+		name = "PRODUCT", 
+		uniqueConstraints=@UniqueConstraint(columnNames={"city_id", "brand_id", "product_subcategory_id", "name", "unit_id"})	)
 public class Product extends IdEntity {
 	
+	@NotNull
+	@NotEmpty
 	@Column(name = "name", nullable = false, length = 150)
 	private String name;
 	
+	@NotNull
 	@OneToOne
 	@JoinColumn(name = "unit_id", nullable = false)
 	private Unit unit;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "product_subcategory_id")
 	private ProductSubcategory subCategory;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
 	private Brand brand;
