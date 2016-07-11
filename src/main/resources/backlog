@@ -1,0 +1,59 @@
+Domains services
+-------
+
+ProductService
+	- find(int id) [find product by id]
+	- findAllProducts(String city, int distance) [find all products available in a city]
+	- findAllProductsByBrand(String city, Brand brand, int distance) [find all available product in a city of a particular brand]
+	- findAllProductBySeller(string city, Person seller) [find all product available on a particular seller]
+	- findAllProductsOnDeal(string city, int distance) [find all products on deal]
+	- save(string city, Product product) [save a product]
+	- update(String city, Product product) [update a product]
+	- delete(int id) [delete a product]
+	
+	
+PersonService
+	- find(int id) [find a person]
+	- findAllSeller(String city, int distance) [find all sellers in city]
+	- findAllSellerWhoDeliver(String city, int distance) [find all sellers in city]
+	- findAllSellerWithActiveDeals(String city, int distance) [find all sellers providing deals presently]
+	- findAllSellersByProduct(String city, Product product, int distance) [find all sellers who are selling a particular product]
+	- findAllConsumerBySearchedProduct(String city, Product product, int distance) [find all people who searched for a particular product]
+	- findAllTopRatedSellers(String city, int distance) [find 10 top rated sellers]
+	- findSellersWithMaximumDeals() [find top 10 sellers with maximum deals]
+	- findMostNoticedSeller() [find top 10 sellers whose deals were mostly viewed]
+	- register(Person person) [save a person] {Note: there should be different way of adding a seller vs adding a consumer}
+	- update(Person person) [update a person]
+	- delete(int id) [delete a person]
+	
+OfferService
+	- find(int id)
+	- findAllOffersByProduct(String city, int distance, Product product) [find all offers of a product in city`]
+	- findAllOffersBySeller(String city, int distance, Person seller ) [find offers given by a particular seller]
+	- findAllOffersBySellerWhoDeliver(String city, int distance, Person seller ) [find all offers from a seller who provide delivery]
+	- findMostPopularOffers(String city, int distance) [find top 5 most viewed offers]
+	- addOffer(String city, Offer offer) [add an offer]
+	- updateOffer(String city, Offer offer) [update an offer]
+	- deleteOffer(String city, Offer offer) [delere an offer]
+		
+ReviewService
+	- find(int id)
+	- findAllReceivedReviews(string city, Person person)
+	- findAllGivenReviews(String city, Person person)
+	- addReview(String city, Review review)
+	- updateReview(String city, Review review)
+	- deleteReview(int id)
+	
+AccountService
+	- find(int id) [find an account]
+	- findAll() [find accounts of user]
+	- addAccount(DealAccount dealAccount)
+	- updateAccount(DealAccount dealAccount)
+	- deleteAccount(int id)
+	
+DealService
+	- find(int id) [find a deal package]
+	- findAll(String city) [find all available deal packages in a city]
+	- addDeal(String city, Person seller)
+	- updateDeal(String city, Person seller)
+	- deleteDeal(int id)
