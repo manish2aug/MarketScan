@@ -86,8 +86,12 @@ If possible implement errors like as follows
 Use HTTPS and TLS
 use jwt\jwe
 https://github.com/jwtk/jjwt
+https://www.youtube.com/watch?v=oXxbB5kv9OA
 
 API key authentication using Oauth: 
+
 POST /token http/1.1
 Content-Type: application/x-www-form-urlencoded
 grant_type=Client_credentials&client_id=apiKeyId&client_secret=apiKeySecret
+https://www.youtube.com/watch?v=DX0TFtoRCOE
+http://github.com/rcandidosilva/rest-oauth2-sample
