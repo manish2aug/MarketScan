@@ -57,3 +57,37 @@ DealService
 	- addDeal(String city, Person seller)
 	- updateDeal(String city, Person seller)
 	- deleteDeal(int id)
+	
+	
+Add authentication using Oauth2
+Implement caching using either approaches: ETag and Last-Modified
+Implement rate limiting : 429 Too Many Requests - When a request is rejected due to rate limiting
+Implement pagination
+Use a fields query parameter that takes a comma separated list of fields to include. (ET /tickets?fields=id,subject,customer_name,updated_at&state=open&sort=-updated_at)
+use ElasticSearch or another Lucene based search technology
+If possible implement errors like as follows
+{
+  "code" : 1024,
+  "message" : "Validation Failed",
+  "errors" : [
+    {
+      "code" : 5432,
+      "field" : "first_name",
+      "message" : "First name cannot have fancy characters"
+    },
+    {
+       "code" : 5622,
+       "field" : "password",
+       "message" : "Password cannot be blank"
+    }
+  ]
+}
+
+Use HTTPS and TLS
+use jwt\jwe
+https://github.com/jwtk/jjwt
+
+API key authentication using Oauth: 
+POST /token http/1.1
+Content-Type: application/x-www-form-urlencoded
+grant_type=Client_credentials&client_id=apiKeyId&client_secret=apiKeySecret
