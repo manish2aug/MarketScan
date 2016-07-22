@@ -51,7 +51,7 @@ public class MarketScanSecurityConfiguration extends WebSecurityConfigurerAdapte
     @Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.antMatcher("/**")
+			.antMatcher("/v1/**")
 			.authorizeRequests()
 				.anyRequest().hasRole("ADMIN")
 				.and()
