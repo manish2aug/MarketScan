@@ -6,18 +6,19 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import ch.qos.logback.access.servlet.TeeFilter;
 import in.co.trish.marketscan.configurations.MarketScanConfiguration;
+import in.co.trish.marketscan.configurations.security.MarketScanSecurityConfiguration;
 import in.co.trish.marketscan.web.filters.CORSFilter;
 
 public class MarketScanWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] { MarketScanConfiguration.class };
+		return new Class[] { MarketScanSecurityConfiguration.class, MarketScanConfiguration.class };
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { MarketScanWebConfigurations.class };
+		return new Class<?>[] { MarketScanWebConfigurations.class};
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class MarketScanWebAppInitializer extends AbstractAnnotationConfigDispatc
 	}
 
 	@Override
-	protected Filter[] getServletFilters() {
+	protected Filter[] getServletFilters() { 
 		
 		// For cross origin protections
 		CORSFilter corsFilter = new CORSFilter();

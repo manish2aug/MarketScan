@@ -31,8 +31,7 @@ import in.co.trish.marketscan.web.MarketScanResponseMessage;
 @EnableScheduling
 @EnableAspectJAutoProxy
 @EnableCaching
-@Import({ MarketScanSwaggerConfiguration.class, MarketScanPersistenceConfiguration.class,
-		MarketScanWebConfigurations.class })
+@Import({ MarketScanSwaggerConfiguration.class, MarketScanPersistenceConfiguration.class, MarketScanWebConfigurations.class})
 public class MarketScanConfiguration {
 
 	@Autowired
