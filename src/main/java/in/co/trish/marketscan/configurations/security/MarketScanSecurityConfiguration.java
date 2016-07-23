@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import in.co.trish.marketscan.security.MySavedRequestAwareAuthenticationSuccessHandler;
@@ -27,7 +28,7 @@ public class MarketScanSecurityConfiguration extends WebSecurityConfigurerAdapte
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().
-          withUser("temporary").password("temporary").roles("ADMIN").and().
+          withUser("admin").password("password").roles("ADMIN").and().
           withUser("user").password("password").roles("USER");
     }
  
@@ -50,12 +51,24 @@ public class MarketScanSecurityConfiguration extends WebSecurityConfigurerAdapte
  
     @Override
 	protected void configure(HttpSecurity http) throws Exception {
+//		http
+//			.antMatcher("/v1/**")
+//			.authorizeRequests()
+//				.anyRequest().hasRole("ADMIN")
+//				.and()
+//			.httpBasic();
+		
 		http
 			.antMatcher("/v1/**")
 			.authorizeRequests()
-				.anyRequest().hasRole("ADMIN")
-				.and()
-			.httpBasic();
+			.anyRequest().hasRole("ADMIN")
+//			.authenticated()
+			.and()
+			.httpBasic()
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and().requiresChannel().anyRequest().requiresSecure();
 	}
     
     @Bean
