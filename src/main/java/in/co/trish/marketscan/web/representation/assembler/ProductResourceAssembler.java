@@ -3,13 +3,11 @@ package in.co.trish.marketscan.web.representation.assembler;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.persistence.entities.ProductSubcategory;
-import in.co.trish.marketscan.web.controllers.OfferRestController;
 import in.co.trish.marketscan.web.controllers.ProductRestController;
 import in.co.trish.marketscan.web.representation.read.ProductResource;
 
@@ -27,12 +25,11 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
 		ProductResource representation = instantiateResource(product);
 		prepareRepresentationData(product, representation);
 		Integer productId = product.getId();
-		representation.add(ControllerLinkBuilder.linkTo(ProductRestController.class, pathParameters.toArray())
-				.slash(productId).withSelfRel());
+//		representation.add(ControllerLinkBuilder.linkTo(ProductRestController.class, pathParameters.toArray()).slash(productId).withSelfRel());
 
 		pathParameters.add(productId);
 		// add link to price comparison
-		representation.add(ControllerLinkBuilder.linkTo(OfferRestController.class, pathParameters.toArray()).withRel("offers"));
+//		representation.add(ControllerLinkBuilder.linkTo(OfferRestController.class, pathParameters.toArray()).withRel("offers"));
 
 		return representation;
 	}

@@ -16,6 +16,8 @@ import in.co.trish.marketscan.persistence.repositories.CityRepository;
 import in.co.trish.marketscan.persistence.repositories.ProductRepository;
 import in.co.trish.marketscan.persistence.repositories.ProductSubcategoryRepository;
 import in.co.trish.marketscan.persistence.repositories.UnitRepository;
+import in.co.trish.marketscan.persistence.repositories.specifications.ProductSpecification;
+import in.co.trish.marketscan.web.representation.read.ProductSearchCriteria;
 import in.co.trish.marketscan.web.services.ProductService;
 
 @Service("productService")
@@ -30,29 +32,35 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private CityRepository cityRepository;
-	
+
 	@Autowired
 	private BrandRepository brandRepository;
-	
+
 	@Autowired
 	private ProductSubcategoryRepository productSubcategoryRepository;
-	
+
 	@Autowired
 	private UnitRepository unitRepository;
-	
+
 	@Override
 	public List<Product> findMatchingProductsInCity(String searchString, City city) {
 		return productRepository.findByNameIgnoreCaseContainingAndCity(searchString, city);
 	}
-	
+
+	@Override
+	public List<Product> findProductsByCriteria(ProductSearchCriteria criteria) {
+
+		return productRepository.findAll(new ProductSpecification(criteria));
+	}
+
 	@Override
 	public Product find(int productId) {
 		return productRepository.findOne(productId);
 	}
-	
+
 	@Override
 	public Product addProduct(String cityCode, Product product) {
-		
+
 		// Add city
 		City city = cityRepository.findByCode(cityCode);
 		product.setCity(city);
@@ -60,15 +68,14 @@ public class ProductServiceImpl implements ProductService {
 		Brand brand = brandRepository.findByCode(product.getBrand().getCode());
 		product.setBrand(brand);
 		// Add product sub category
-		ProductSubcategory productSubcategory = productSubcategoryRepository.findByCode(product.getSubCategory().getCode());
+		ProductSubcategory productSubcategory = productSubcategoryRepository
+				.findByCode(product.getSubCategory().getCode());
 		product.setSubCategory(productSubcategory);
 		// Add unit
 		Unit unit = unitRepository.findByCode(product.getUnit().getCode());
 		product.setUnit(unit);
-		
+
 		return productRepository.saveAndFlush(product);
 	}
-	
-	
-	
+
 }

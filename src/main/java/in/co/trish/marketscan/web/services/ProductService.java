@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Product;
+import in.co.trish.marketscan.web.representation.read.ProductSearchCriteria;
 
 public interface ProductService {
 	
@@ -12,4 +13,6 @@ public interface ProductService {
 	Product find(int productId);
 
 	Product addProduct(String cityCode, Product product);
+
+	List<Product> findProductsByCriteria(ProductSearchCriteria criteria);
 }

@@ -32,23 +32,6 @@ public class MarketScanSecurityConfiguration extends WebSecurityConfigurerAdapte
           withUser("user").password("password").roles("USER");
     }
  
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception { 
-//        http
-//        .csrf().disable()
-//        .exceptionHandling()
-//        .authenticationEntryPoint(restAuthenticationEntryPoint)
-//        .and()
-//        .authorizeRequests()
-//        .antMatchers("/*").authenticated()
-//        .and()
-//        .formLogin()
-//        .successHandler(authenticationSuccessHandler)
-//        .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-//        .and()
-//        .logout();
-//    }
- 
     @Override
 	protected void configure(HttpSecurity http) throws Exception {
 //		http
@@ -62,7 +45,7 @@ public class MarketScanSecurityConfiguration extends WebSecurityConfigurerAdapte
 			.antMatcher("/v1/**")
 			.authorizeRequests()
 			.anyRequest().hasRole("ADMIN")
-//			.authenticated()
+			.anyRequest().authenticated()
 			.and()
 			.httpBasic()
 			.and()
