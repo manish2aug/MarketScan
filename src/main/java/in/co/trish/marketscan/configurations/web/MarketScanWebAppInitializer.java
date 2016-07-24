@@ -2,6 +2,7 @@ package in.co.trish.marketscan.configurations.web;
 
 import javax.servlet.Filter;
 
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import ch.qos.logback.access.servlet.TeeFilter;
@@ -33,7 +34,10 @@ public class MarketScanWebAppInitializer extends AbstractAnnotationConfigDispatc
 		CORSFilter corsFilter = new CORSFilter();
 		// For capturing incoming HTTP requests and outgoing responses
 		TeeFilter teeFilter = new TeeFilter();
-		Filter[] filters = { corsFilter, teeFilter };
+		// For ETag support
+		ShallowEtagHeaderFilter etagFilter = new ShallowEtagHeaderFilter();
+		
+		Filter[] filters = { corsFilter, teeFilter,etagFilter };
 		return filters;
 	}
 

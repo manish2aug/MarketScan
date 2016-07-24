@@ -1,0 +1,7 @@
+For generating certificate
+-----------------------------
+keytool -genkey -keyalg RSA -alias localhost -keystore C:\Users\mkumar\Downloads\market-scan.jks -storepass shraddha@6mar -validity 360 -keysize 2048
+
+eneable ssl connector in tomact\server.xml
+-------------------------------------------
+<Connector SSLEnabled="true" keystoreFile="C:/Users/manish2aug/market-scan.keystore" keystorePass="shraddha@6mar" port="8443" scheme="https" secure="true" sslProtocol="TLS"/>

@@ -8,8 +8,8 @@ public class ProductSearchCriteria {
 	private String locality;
 	private String category;
 	private String sub_category;
-	private long max_cost;
-	private long min_cost;
+	private double max_cost;
+	private double min_cost;
 	private String brand;
 	private String author;
 	private boolean is_service;
@@ -37,7 +37,7 @@ public class ProductSearchCriteria {
 	 * @param fields
 	 */
 	public ProductSearchCriteria(String city, String name, long distance, String seller, String locality,
-			String category, String sub_category, long max_cost, long min_cost, String brand, String author,
+			String category, String sub_category, double max_cost, double min_cost, String brand, String author,
 			boolean is_service, boolean is_expired, boolean is_deal, String fields) {
 		super();
 		this.city = city;
@@ -101,13 +101,13 @@ public class ProductSearchCriteria {
 	/**
 	 * @return the max_cost
 	 */
-	public long getMax_cost() {
+	public double getMax_cost() {
 		return max_cost;
 	}
 	/**
 	 * @return the min_cost
 	 */
-	public long getMin_cost() {
+	public double getMin_cost() {
 		return min_cost;
 	}
 	/**
