@@ -103,3 +103,71 @@ Futuristic enhancement
 1. Let Seller hunt for buyer, ie a functioanility when user (potential buyer) publish a requirement in real time manner and that requirement becomes available to 
 sellers. Then seller starts bidding and whose bid is minimum wins. The system role is to publish such requirements available for sellers to pick and then to 
 present bids to buyer on the basis of seller's reputation and track record.   
+
+
+------------------------------------------------------------------------------------------------------------------------
+findings from videos
+--------------------------------------------------------------------------------------------------------------------------
+
+Observations from (REST-Ful API Design by spring developer) https://www.youtube.com/watch?v=oG2rotiGr90
+================================================================
+
+Repository interface should throw application specific exception
+
+one way to inject repository in resource
+private final GameRepository repo, then in constructor autowired
+
+409 conflict : an operation which is not possible from application point of view
+
+
+Get
+----
+	1. Must be safe and idempotent
+	2. Can be conditional or partial
+		If-Modified-Since
+		Range
+
+
+DELETE
+------
+	1. The resource doesn't have to be removed immediately
+
+
+POST
+-----
+	1. Can be used to create or modify
+
+
+media-Type
+application/json+foo;application&v=1
+ 
+use iso8601 for date
+
+id's should be opaque
+
+request header values comma delimited in order of preference
+
+Accept: application/json, text/plain
+
+Implemented a way to tell sever in what way you want data back like google does by specifying json in req
+
+have a req paramater to tell server if you dont want body
+
+fields req param
+
+no of res returned controlled by req param
+
+response shoul be more descriptive
+
+authorize based on resource not url
+
+http authentication scheme investigate
+
+use api key
+
+use BCrypt
+
+api key encrypted using message authentication code
+
+ID good candidates UUID Url64
+
