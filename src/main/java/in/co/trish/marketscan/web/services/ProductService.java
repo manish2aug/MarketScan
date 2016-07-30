@@ -4,7 +4,7 @@ import java.util.List;
 
 import in.co.trish.marketscan.persistence.entities.City;
 import in.co.trish.marketscan.persistence.entities.Product;
-import in.co.trish.marketscan.web.representation.read.ProductSearchCriteria;
+import in.co.trish.marketscan.web.criterias.ProductSearchCriteria;
 
 public interface ProductService {
 	

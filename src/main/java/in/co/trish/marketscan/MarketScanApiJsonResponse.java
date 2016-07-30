@@ -2,7 +2,7 @@ package in.co.trish.marketscan;
 
 import java.util.Collection;
 
-import in.co.trish.marketscan.web.representation.read.MarketScanReadRepresentation;
+import in.co.trish.marketscan.web.resources.read.MarketScanReadRepresentation;
 //TODO: all response should be returned in this form
 public class MarketScanApiJsonResponse {
 	

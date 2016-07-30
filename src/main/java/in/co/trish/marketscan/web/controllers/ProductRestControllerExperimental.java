@@ -24,9 +24,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import in.co.trish.marketscan.application.MarketScanApplicationConstants;
 import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.web.MarketScanResponseMessage;
-import in.co.trish.marketscan.web.representation.assembler.ProductResourceAssembler;
-import in.co.trish.marketscan.web.representation.read.ProductResource;
-import in.co.trish.marketscan.web.representation.read.ProductSearchCriteria;
+import in.co.trish.marketscan.web.assemblers.ProductResourceAssembler;
+import in.co.trish.marketscan.web.criterias.ProductSearchCriteria;
+import in.co.trish.marketscan.web.resources.read.ProductResource;
 import in.co.trish.marketscan.web.services.BrandService;
 import in.co.trish.marketscan.web.services.CityService;
 import in.co.trish.marketscan.web.services.ProductService;
@@ -76,7 +76,7 @@ public class ProductRestControllerExperimental {
 	public ResponseEntity<List<ProductResource>> getItems(
 			@ApiParam(value = "City for which the search should be performed", defaultValue="User's current city") @RequestParam(name = "name", required=true) @NotBlank String city, // TODO: the default value should be user's current city, server should retrieve value if ui doesn't send
 			@ApiParam(value = "Search string contained in product name") @RequestParam(name = "name", required=true) @NotBlank String name,
-			@ApiParam(value = "Radius in Kilometers of the area in which search should be performed") @RequestParam(name = "distance", defaultValue="1") @Min(value=1) long distance,
+			@ApiParam(value = "Radius in Kilometers of the area in which search should be performed") @RequestParam(name = "distance", defaultValue="2") @Min(value=2) long distance,
 			@ApiParam(value = "Seller name for which search should be performed") @RequestParam(name = "seller", required=false) String seller,
 			@ApiParam(value = "Locality name in which the search should be performed") @RequestParam(name = "locality", required=false) String locality,
 			@ApiParam(value = "Category name in which the searched item lies") @RequestParam(name = "category", required=false) String category,

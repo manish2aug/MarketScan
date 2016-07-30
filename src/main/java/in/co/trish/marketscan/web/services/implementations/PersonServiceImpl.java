@@ -12,7 +12,7 @@ import in.co.trish.marketscan.persistence.entities.Person;
 import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.persistence.entities.Role;
 import in.co.trish.marketscan.persistence.repositories.PersonRepository;
-import in.co.trish.marketscan.web.exception.MarketScanBadRequestException;
+import in.co.trish.marketscan.web.exceptions.MarketScanBadRequestException;
 import in.co.trish.marketscan.web.services.PersonService;
 
 @Service("personService")

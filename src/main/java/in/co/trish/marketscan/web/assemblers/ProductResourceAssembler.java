@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.representation.assembler;
+package in.co.trish.marketscan.web.assemblers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import in.co.trish.marketscan.persistence.entities.Product;
 import in.co.trish.marketscan.persistence.entities.ProductSubcategory;
 import in.co.trish.marketscan.web.controllers.ProductRestController;
-import in.co.trish.marketscan.web.representation.read.ProductResource;
+import in.co.trish.marketscan.web.resources.read.ProductResource;
 
 @Component
 public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, ProductResource> {

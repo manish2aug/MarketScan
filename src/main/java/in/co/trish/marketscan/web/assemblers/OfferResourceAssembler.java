@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.representation.assembler;
+package in.co.trish.marketscan.web.assemblers;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import in.co.trish.marketscan.persistence.entities.Offer;
 import in.co.trish.marketscan.persistence.entities.Person;
 import in.co.trish.marketscan.persistence.entities.Review;
 import in.co.trish.marketscan.web.controllers.OfferRestController;
-import in.co.trish.marketscan.web.representation.read.OfferReadResource;
+import in.co.trish.marketscan.web.resources.read.OfferReadResource;
 
 @Component
 public class OfferResourceAssembler extends ResourceAssemblerSupport<Offer, OfferReadResource> {

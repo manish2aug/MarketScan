@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.exception;
+package in.co.trish.marketscan.web.exceptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

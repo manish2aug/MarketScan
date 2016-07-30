@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.representation.read;
+package in.co.trish.marketscan.web.resources.read;
 
 /**
  * Adds semantics to market scan responses 

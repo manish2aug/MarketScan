@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.exception;
+package in.co.trish.marketscan.web.exceptions;
 
 public class MarketScanBadRequestException extends RuntimeException {
 	

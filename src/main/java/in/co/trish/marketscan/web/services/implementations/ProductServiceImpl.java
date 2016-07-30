@@ -17,7 +17,7 @@ import in.co.trish.marketscan.persistence.repositories.ProductRepository;
 import in.co.trish.marketscan.persistence.repositories.ProductSubcategoryRepository;
 import in.co.trish.marketscan.persistence.repositories.UnitRepository;
 import in.co.trish.marketscan.persistence.repositories.specifications.ProductSpecification;
-import in.co.trish.marketscan.web.representation.read.ProductSearchCriteria;
+import in.co.trish.marketscan.web.criterias.ProductSearchCriteria;
 import in.co.trish.marketscan.web.services.ProductService;
 
 @Service("productService")

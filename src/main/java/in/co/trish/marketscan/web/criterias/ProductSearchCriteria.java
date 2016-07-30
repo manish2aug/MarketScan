@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.representation.read;
+package in.co.trish.marketscan.web.criterias;
 
 public class ProductSearchCriteria {
 	private String city; // TODO: the default value should be user's current city; server should retrieve value if ui doesn't send

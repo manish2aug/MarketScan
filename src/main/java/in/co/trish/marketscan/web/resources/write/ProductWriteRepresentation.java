@@ -1,4 +1,4 @@
-package in.co.trish.marketscan.web.representation.write;
+package in.co.trish.marketscan.web.resources.write;
 
 import javax.validation.constraints.NotNull;
 

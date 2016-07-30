@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 
 import in.co.trish.marketscan.persistence.entities.Brand;
 import in.co.trish.marketscan.persistence.entities.Product;
-import in.co.trish.marketscan.web.representation.read.ProductSearchCriteria;
+import in.co.trish.marketscan.web.criterias.ProductSearchCriteria;
 
 public class ProductSpecification implements Specification<Product> {
 	
@@ -89,13 +89,13 @@ public class ProductSpecification implements Specification<Product> {
 	}
 	
 	private void addSellerCriteria(Root<Product> root, CriteriaBuilder builder, List<Predicate> predicates) {
-		// TODO Auto-generated method stub
-		
+		if (!StringUtils.isEmpty(criteria.getSeller())) {
+			predicates.add(builder.like(builder.upper(root.<String> get("name")), "%" + criteria.getName().toUpperCase() + "%"));
+		}
 	}
 	
 	private void addDistanceCriteria(Root<Product> root, CriteriaBuilder builder, List<Predicate> predicates) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	private void addCityCriteria(Root<Product> root, CriteriaBuilder builder, List<Predicate> predicates) {

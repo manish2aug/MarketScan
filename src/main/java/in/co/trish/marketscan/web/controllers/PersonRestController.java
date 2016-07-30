@@ -22,9 +22,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import in.co.trish.marketscan.application.MarketScanApplicationConstants;
 import in.co.trish.marketscan.persistence.entities.Person;
-import in.co.trish.marketscan.web.exception.MarketScanBadRequestException;
-import in.co.trish.marketscan.web.representation.read.PersonResource;
-import in.co.trish.marketscan.web.representation.read.ProductResource;
+import in.co.trish.marketscan.web.exceptions.MarketScanBadRequestException;
+import in.co.trish.marketscan.web.resources.read.PersonResource;
+import in.co.trish.marketscan.web.resources.read.ProductResource;
 import in.co.trish.marketscan.web.services.CityService;
 import in.co.trish.marketscan.web.services.PersonService;
 import in.co.trish.marketscan.web.services.RoleService;
