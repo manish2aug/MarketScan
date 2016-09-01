@@ -56,6 +56,8 @@ public class ProductSearchCriteria {
 		this.is_deal = is_deal;
 		this.fields = fields;
 	}
+	
+	
 	/**
 	 * @return the city
 	 */
@@ -158,6 +160,41 @@ public class ProductSearchCriteria {
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
-	
-	
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ProductSearchCriteria [");
+		if (city != null)
+			builder.append("city=").append(city).append(", ");
+		if (name != null)
+			builder.append("name=").append(name).append(", ");
+		builder.append("distance=").append(distance).append(", ");
+		if (seller != null)
+			builder.append("seller=").append(seller).append(", ");
+		if (locality != null)
+			builder.append("locality=").append(locality).append(", ");
+		if (category != null)
+			builder.append("category=").append(category).append(", ");
+		if (sub_category != null)
+			builder.append("sub_category=").append(sub_category).append(", ");
+		builder.append("max_cost=").append(max_cost).append(", min_cost=").append(min_cost).append(", ");
+		if (brand != null)
+			builder.append("brand=").append(brand).append(", ");
+		if (author != null)
+			builder.append("author=").append(author).append(", ");
+		builder.append("is_service=").append(is_service).append(", is_expired=").append(is_expired).append(", is_deal=")
+				.append(is_deal).append(", ");
+		if (fields != null)
+			builder.append("fields=").append(fields).append(", ");
+		if (operation != null)
+			builder.append("operation=").append(operation);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

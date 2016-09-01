@@ -74,7 +74,7 @@ public class ProductRestControllerExperimental {
 		}
 	)
 	public ResponseEntity<List<ProductResource>> getItems(
-			@ApiParam(value = "City for which the search should be performed", defaultValue="User's current city") @RequestParam(name = "name", required=true) @NotBlank String city, // TODO: the default value should be user's current city, server should retrieve value if ui doesn't send
+			@ApiParam(value = "City for which the search should be performed", defaultValue="User's current city") @RequestParam(name = "city", required=true) @NotBlank String city, // TODO: the default value should be user's current city, server should retrieve value if ui doesn't send
 			@ApiParam(value = "Search string contained in product name") @RequestParam(name = "name", required=true) @NotBlank String name,
 			@ApiParam(value = "Radius in Kilometers of the area in which search should be performed") @RequestParam(name = "distance", defaultValue="2") @Min(value=2) long distance,
 			@ApiParam(value = "Seller name for which search should be performed") @RequestParam(name = "seller", required=false) String seller,
@@ -94,6 +94,7 @@ public class ProductRestControllerExperimental {
 		ProductSearchCriteria criteria = new ProductSearchCriteria(city, name, distance, seller, locality, category, sub_category, max_cost, min_cost, brand, author, is_service, is_expired, is_deal, fields);
 		criteria.setOperation(":");
 		// retrieve all products as per the search criteria 
+		log.debug(criteria.toString());
 		List<Product> products = productService.findProductsByCriteria(criteria);
 		
 		if (products.isEmpty()) {

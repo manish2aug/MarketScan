@@ -9,7 +9,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 
+import in.co.trish.marketscan.persistence.entities.Brand;
 import in.co.trish.marketscan.persistence.entities.Offer;
 import in.co.trish.marketscan.web.criterias.OfferSearchCriteria;
 
@@ -81,11 +83,15 @@ public class OfferSpecification implements Specification<Offer> {
 	}
 	
 	private void addMinCostCriteria(Root<Offer> root, CriteriaBuilder builder, List<Predicate> predicates) {
-		// TODO Auto-generated method stub
+		if (criteria.getMin_cost() > 0) {
+			predicates.add(builder.greaterThanOrEqualTo(root.join("offers").<Double> get("price"), criteria.getMin_cost()));
+		}
 	}
 	
 	private void addSellerCriteria(Root<Offer> root, CriteriaBuilder builder, List<Predicate> predicates) {
-		// TODO Auto-generated method stub
+		if (!StringUtils.isEmpty(criteria.getSeller())) {
+			predicates.add(builder.like(builder.upper(root.<String> get("name")), "%" + criteria.getName().toUpperCase() + "%"));
+		}
 	}
 	
 	private void addDistanceCriteria(Root<Offer> root, CriteriaBuilder builder, List<Predicate> predicates) {
@@ -98,15 +104,21 @@ public class OfferSpecification implements Specification<Offer> {
 	}
 	
 	private void addMaxCostCriteria(Root<Offer> root, CriteriaBuilder builder, List<Predicate> predicates) {
-		// TODO Auto-generated method stub
+		if (criteria.getMax_cost() > 0) {
+			predicates.add(builder.lessThanOrEqualTo(root.join("offers").<Double> get("price"), criteria.getMax_cost()));
+		}
 	}
 	
 	private void addNameCriteria(Root<Offer> root, CriteriaBuilder builder, List<Predicate> predicates) {
-		// TODO Auto-generated method stub
+		if (!StringUtils.isEmpty(criteria.getName())) {
+			predicates.add(builder.like(builder.upper(root.<String> get("name")), "%" + criteria.getName().toUpperCase() + "%"));
+		}
 	}
 	
 	private void addBrandCriteria(Root<Offer> root, CriteriaBuilder builder, List<Predicate> predicates) {
-		// TODO Auto-generated method stub
+		if (!StringUtils.isEmpty(criteria.getBrand())) {
+			predicates.add(builder.equal(root.<Brand> get("brand").<String> get("name"), criteria.getBrand()));
+		}
 	}
 	
 }
